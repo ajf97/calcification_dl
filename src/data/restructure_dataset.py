@@ -8,6 +8,15 @@ from src.paths import CONFIG_FOLDER_PATH
 
 
 def new_name_dcm_file(file_path: str) -> str:
+    """Give a new name to a dicom file.
+
+    Args:
+        file_path (str): path to the dicom file
+
+    Returns:
+        str: a new name for the dicom file
+    """
+
     # Check description of folder
     folder_description: str = file_path.split(os.sep)[-2]
     new_name: str = ""
@@ -27,6 +36,11 @@ def new_name_dcm_file(file_path: str) -> str:
 
 
 def make_directories(path: str) -> None:
+    """Make directories for the dataset.
+
+    Args:
+        path (str): Absolute path to the dataset
+    """
     # Make a directory with different lesions
     path_calc = os.path.join(path, "Calc")
     path_mass = os.path.join(path, "Mass")
@@ -47,6 +61,12 @@ def make_directories(path: str) -> None:
 
 
 def remove_empty_folders(path_abs: str) -> None:
+    """Remove empty folders.
+
+    Args:
+        path_abs (str): Absolute path to the dataset
+    """
+
     walk = list(os.walk(path_abs))
     for path, _, _ in walk[::-1]:
         if len(os.listdir(path)) == 0:
@@ -54,6 +74,11 @@ def remove_empty_folders(path_abs: str) -> None:
 
 
 def restructure_dataset(path: str) -> None:
+    """Restructure the dataset.
+
+    Args:
+        path (str): Absolute path to the dataset
+    """
     make_directories(path)
 
     for root, _, files in os.walk(path):
