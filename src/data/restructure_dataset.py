@@ -100,7 +100,7 @@ def restructure_dataset(path: str) -> None:
 
 @hydra.main(config_path=CONFIG_FOLDER_PATH, config_name="config", version_base=None)
 def app(cfg: DictConfig) -> None:
-    path = cfg.dataset[1].path
+    path = cfg.dataset.path
     restructure_dataset(path)
 
 
