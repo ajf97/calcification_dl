@@ -1,0 +1,4 @@
+name: cbis_ddsm
+path: "D:\\cbis_ddsm"
+calc_train_path: "D:\\cbis_ddsm\\CBIS-DDSM\\Calc\\Training"
+calc_test_path: "D:\\cbis_ddsm\\CBIS-DDSM\\Calc\\Test"
