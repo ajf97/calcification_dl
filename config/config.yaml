@@ -1,4 +1,4 @@
 defaults:
-  - dataset: cbis_ddsm
+  - dataset/cbis_ddsm
 
 seed: 33
