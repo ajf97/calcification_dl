@@ -23,7 +23,7 @@ class CbisDatasetPreprocessed(Dataset):
         file_name = full_mammograms[idx]
 
         img_path = os.path.join(self.img_dir, file_name)
-        image = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE).astype(np.int32)
+        image = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE).astype(np.uint8)
 
         label_path = "_".join(file_name.split("_")[:-1]) + "_MASK.png"
         label = cv2.imread(os.path.join(self.img_dir, label_path), cv2.IMREAD_GRAYSCALE)

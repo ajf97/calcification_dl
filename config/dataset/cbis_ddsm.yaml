@@ -1,6 +1,6 @@
 name: cbis_ddsm
 path: "D:\\cbis_ddsm"
-path_preprocessed_train: "D:\\cbis_ddsm_preprocessed\\Training"
-path_preprocessed_test: "D:\\cbis_ddsm_preprocessed\\Test"
+path_preprocessed_train: "D:\\cbis_ddsm_preprocessed\\train"
+path_preprocessed_test: "D:\\cbis_ddsm_preprocessed\\test"
 calc_train_path: "D:\\cbis_ddsm\\CBIS-DDSM\\Calc\\Training"
 calc_test_path: "D:\\cbis_ddsm\\CBIS-DDSM\\Calc\\Test"

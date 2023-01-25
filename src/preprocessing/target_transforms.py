@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from torch import argmax, from_numpy
+from torch import argmax, from_numpy, unsqueeze
 
 
 class ToTensorMask(object):
@@ -10,8 +10,8 @@ class ToTensorMask(object):
 
     def __call__(self, mask):
         numpy_to_tensor = from_numpy(mask)
-        # return unsqueeze(numpy_to_tensor, 0)
-        return numpy_to_tensor
+        return unsqueeze(numpy_to_tensor, 0)
+        # return numpy_to_tensor
 
 
 class ResizeMask(object):

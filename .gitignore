@@ -4,3 +4,4 @@ outputs
 notebooks
 .pytest_cache
 logs
+temp
