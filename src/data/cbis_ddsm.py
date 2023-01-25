@@ -1,16 +1,20 @@
 import os
 import re
 
+import cv2
 import numpy as np
 import pydicom
 from torch.utils.data import Dataset
 
 
 class CbisDataset(Dataset):
-    def __init__(self, img_dir: str, transform=None, target_transform=None):
+    def __init__(
+        self, img_dir: str, transform=None, out_dir=None, target_transform=None
+    ):
         self.img_dir = img_dir
         self.transform = transform
         self.target_transform = target_transform
+        self.out_dir = out_dir
 
     def __len__(self):
         files_list = os.listdir(self.img_dir)
@@ -30,6 +34,20 @@ class CbisDataset(Dataset):
             image = self.transform(image)
         if self.target_transform:
             label = self.target_transform(label)
+
+        image = image.astype(float)
+        rescaled_image = (np.maximum(image, 0) / image.max()) * 255  # float pixels
+        image = np.uint8(rescaled_image)  # integers pixels
+
+        if self.out_dir:
+            file_name_image = file_name.split(".")[0] + ".png"
+            file_name_label = "_".join(file_name.split("_")[:-1]) + "_MASK.png"
+
+            # cv2.imwrite(os.path.join(self.out_dir, file_name_image), image[0].numpy())
+            cv2.imwrite(os.path.join(self.out_dir, file_name_image), image)
+            cv2.imwrite(
+                os.path.join(self.out_dir, file_name_label), label[0].numpy() * 255
+            )
 
         return image, label
 

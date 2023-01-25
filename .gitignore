@@ -3,3 +3,5 @@ __pycache__
 outputs
 notebooks
 .pytest_cache
+logs
+temp

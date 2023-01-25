@@ -1,4 +1,5 @@
 defaults:
-  - dataset: cbis_ddsm
+  - dataset/cbis_ddsm
 
 seed: 33
+model_dir: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src\\models"

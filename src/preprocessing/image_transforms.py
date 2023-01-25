@@ -241,3 +241,15 @@ class ToSquare(object):
             return "left"
         else:
             return "right"
+
+
+class ConvertToRGB(object):
+    """
+    A class to convert an image to RGB.
+
+    Args:
+        image (np.ndarray): image to convert
+    """
+
+    def __call__(self, image: np.ndarray) -> np.ndarray:
+        return cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
