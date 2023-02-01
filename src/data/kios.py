@@ -8,7 +8,7 @@ from torch.utils.data import Dataset
 from preprocessing.transforms import preprocess
 
 
-class CBISDataset(Dataset):
+class KIOSDataset(Dataset):
     def __init__(self, img_dir: str, mask_dir: str, transform=False):
         self.img_dir = img_dir
         self.mask_dir = mask_dir
@@ -26,10 +26,7 @@ class CBISDataset(Dataset):
         image = cv2.imread(img_path)
 
         mask_file_name = img_file_name.split(".")[0]
-        mask_file_name = mask_file_name.split("_")
-
-        mask_file_name[-1] = "MASK"
-        mask_file_name = "_".join(mask_file_name) + ".png"
+        mask_file_name = mask_file_name + "_MASK.png"
 
         mask_path = os.path.join(self.mask_dir, mask_file_name)
         label = cv2.imread(mask_path, 0)
