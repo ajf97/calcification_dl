@@ -2,19 +2,27 @@ import cv2
 import numpy as np
 
 
-def normalize(image: np.ndarray, mask: np.ndarray, type=np.float32):
+def normalize(image: np.ndarray, mask=None, type=np.float32):
     image_norm = image.astype(type) / 255
-    mask_norm = mask / 255.0
 
-    return image_norm, mask_norm
+    if mask:
+        mask_norm = mask / 255.0
+        return image_norm, mask_norm
+    else:
+        return image_norm
 
 
-def left_mamm(image: np.ndarray, mask):
+def left_mamm(image: np.ndarray, mask=None):
     if image[:, :200, ...].sum() < image[:, -200:, ...].sum():
         image[:, :, ...] = image[:, ::-1, ...]
-        mask[:, :, ...] = mask[:, ::-1, ...]
 
-    return image, mask
+        if mask:
+            mask[:, :, ...] = mask[:, ::-1, ...]
+
+    if mask:
+        return image, mask
+    else:
+        return image
 
 
 def clean_mamm(image: np.ndarray) -> np.ndarray:
@@ -41,7 +49,7 @@ def clean_mamm(image: np.ndarray) -> np.ndarray:
     return image
 
 
-def cut_mamm(image: np.ndarray, mask: np.ndarray) -> np.ndarray:
+def cut_mamm(image: np.ndarray, mask=None):
     """Cut mamogram with an optimal width.
 
     We remove uneccesary background which may cause a loss of essential information
@@ -50,9 +58,12 @@ def cut_mamm(image: np.ndarray, mask: np.ndarray) -> np.ndarray:
     act_w = get_act_width(image)
     h = image.shape[0]
     image = image[:h, :act_w]
-    mask = mask[:h, :act_w]
 
-    return image, mask
+    if mask:
+        mask = mask[:h, :act_w]
+        return image, mask
+    else:
+        return image
 
 
 def get_act_width(image: np.ndarray):
@@ -72,10 +83,19 @@ def get_act_width(image: np.ndarray):
     return w
 
 
-def preprocess(image: np.ndarray, mask: np.ndarray):
-    image, mask = normalize(image, mask)
-    image, mask = left_mamm(image, mask)
-    image = clean_mamm(image)
-    image, mask = cut_mamm(image, mask)
+def preprocess(image: np.ndarray, mask=None):
+    if mask:
+        image, mask = normalize(image, mask)
+        image, mask = left_mamm(image, mask)
+        image = clean_mamm(image)
+        image, mask = cut_mamm(image, mask)
+    else:
+        image = normalize(image)
+        image = left_mamm(image)
+        image = clean_mamm(image)
+        image = cut_mamm(image)
 
-    return image, mask
+    if mask:
+        return image, mask
+    else:
+        return image
