@@ -5,7 +5,7 @@ import pytest
 from hydra import compose, initialize
 
 from paths import CONFIG_FOLDER_PATH
-from preprocessing.target_transforms import *
+from preprocessing.first_experiments.target_transforms import *
 
 with initialize(
     version_base=None,

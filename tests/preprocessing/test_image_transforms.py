@@ -6,7 +6,7 @@ from hydra import compose, initialize
 from torchvision.transforms import Compose
 
 from paths import CONFIG_FOLDER_PATH
-from preprocessing.image_transforms import *
+from preprocessing.first_experiments.image_transforms import *
 
 with initialize(
     version_base=None,

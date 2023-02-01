@@ -11,8 +11,8 @@ from loguru import logger
 from PIL import Image
 
 import models.unet_base as unet_base
-import preprocessing.image_transforms as imgt
-import preprocessing.target_transforms as tgt
+import preprocessing.first_experiments.image_transforms as imgt
+import preprocessing.first_experiments.target_transforms as tgt
 
 st.header("Segmentación de calcificaciones en mamografías")
 st.write(
