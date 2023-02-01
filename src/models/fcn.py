@@ -1,17 +1,13 @@
-import os
-
 import cv2
-import IPython
-import matplotlib.pyplot as plt
-import numpy as np
 import torch
-
-from IPython.display import clear_output
+from hydra import compose, initialize
+from omegaconf import OmegaConf
 from torch import nn
 from torchvision import transforms
 
-SHEBA_MEAN = 0.1572722182674478
-SHEBA_STD = 0.16270082671743363
+initialize(version_base=None, config_path="../../config")
+cfg = compose(config_name="config")
+print(OmegaConf.to_yaml(cfg))
 
 
 class CBlock(nn.Module):
@@ -74,10 +70,9 @@ def initialize_model():
     model = NetC(tag="encoder")
     model.eval()
 
-    # FIXME: it's neccesary to avoid absolute paths like this.
     model.load_state_dict(
         torch.load(
-            "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src\\models\\pretrained.weights",
+            cfg.pretrained_weights,
             map_location=next(model.parameters()).device,
         )
     )
@@ -93,69 +88,11 @@ def initialize_model():
     return model
 
 
-def left_mamm(mamm):
-    if mamm[:, :200, ...].sum() < mamm[:, -200:, ...].sum():
-        mamm[:, :, ...] = mamm[:, ::-1, ...]
-
-    return mamm
-
-
-def get_act_width(mamm):
-    w = mamm.shape[1] // 3
-
-    while mamm[:, w:].max() > 0:
-        w += 1
-
-    return w
-
-
-def clean_mamm(mamm):
-    background_val = 0
-    mamm[:10, :, ...] = 0
-    mamm[-10:, :, ...] = 0
-    mamm[:, -10:, ...] = 0
-
-    msk1 = (mamm[:, :, 0] == mamm[:, :, 1]) & (mamm[:, :, 1] == mamm[:, :, 2])
-    mamm = mamm.mean(axis=2) * msk1
-    msk = np.uint8((mamm > background_val) * 255)
-    msk = cv2.morphologyEx(
-        msk, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_RECT, (50, 50))
-    )
-
-    comps = cv2.connectedComponentsWithStats(msk)
-
-    common_label = np.argmax(comps[2][1:, cv2.CC_STAT_AREA]) + 1
-
-    msk = (comps[1] == common_label).astype(np.uint8)
-
-    mamm[:, :] = msk * mamm[:, :]
-
-    return mamm
-
-
-def cut_mamm(mamm, act_w):
-    h = mamm.shape[0]
-    mamm = mamm[:h, :act_w]
-
-    return mamm
-
-
-def mamms_preprocess(mamm):
-    mamm = left_mamm(mamm)
-    mamm = clean_mamm(mamm)
-
-    act_w = get_act_width(mamm)
-
-    mamm = cut_mamm(mamm, act_w)
-
-    return mamm
-
-
 def predict(net, img):
     model_device = next(net.parameters()).device
     sig = nn.Sigmoid()
     toten = transforms.ToTensor()
-    norm = transforms.Normalize(mean=[SHEBA_MEAN], std=[SHEBA_STD])
+    norm = transforms.Normalize(mean=[cfg.sheba_mean], std=[cfg.sheba_std])
     if len(img.shape) == 2:
         img = img[..., None]
     img = norm(toten(img).float())[:1][None, ...].float()
@@ -165,49 +102,3 @@ def predict(net, img):
     sig_pred = sig(pred)
 
     return sig_pred[0, 0].cpu().numpy()
-
-
-def load_mamm(image, case_path=None, max_height=0, width=0, encoder=None):
-    # mamm = cv2.imread(case_path).astype(np.float32) / 255
-    image = image.astype(np.float32) / 255
-    mamm = mamms_preprocess(image)
-
-    return mamm
-
-
-def display_np_img(img):
-    img = img.copy().astype("float")
-    img -= img.min()
-    img /= img.max()
-    img = (255 * img).astype("uint8")
-
-    cv2.imshow("test", img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-    # return img
-
-
-def update(img, x, y):
-    tmp = mamm_w_heatmap
-    tmp[..., 2] = x * tmp[..., 2] + y * result2
-    display_np_img(tmp)
-
-
-def show_mamm_w_boxes(processed_mamm, prediction, th=0.5):
-    result = (np.tile(processed_mamm[..., None], (1, 1, 3)) * 255).astype("uint8")
-    bbs = np.zeros_like(result)
-    cc = cv2.connectedComponentsWithStats((prediction > th).astype("uint8"), 8)
-    for i in range(1, cc[0]):
-        start_point = cc[2][i][0] - 5, cc[2][i][1] - 5
-        end_point = start_point[0] + cc[2][i][2] + 10, start_point[1] + cc[2][i][3] + 10
-        cv2.rectangle(bbs, start_point, end_point, (0, 0, 255), cv2.FILLED)
-    clear_output()
-    display_np_img(cv2.addWeighted(result, 1.0, bbs, 0.5, 1))
-
-
-def segmentation_map(prediction, threshold=0.5):
-    seg_map = prediction.copy()
-    seg_map[seg_map < threshold] = 0
-    seg_map[seg_map > 0] = 1
-
-    return seg_map * 255
