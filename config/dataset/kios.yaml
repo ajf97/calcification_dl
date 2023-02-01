@@ -1,0 +1,4 @@
+name: kios
+path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS"
+images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\IMAGES"
+masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\MASKS"

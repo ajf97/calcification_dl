@@ -1,6 +1,4 @@
 name: cbis_ddsm
-path: "D:\\cbis_ddsm"
-path_preprocessed_train: "D:\\cbis_ddsm_preprocessed\\train"
-path_preprocessed_test: "D:\\cbis_ddsm_preprocessed\\test"
-calc_train_path: "D:\\cbis_ddsm\\CBIS-DDSM\\Calc\\Training"
-calc_test_path: "D:\\cbis_ddsm\\CBIS-DDSM\\Calc\\Test"
+path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM"
+images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\IMAGES"
+masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\MASKS"
