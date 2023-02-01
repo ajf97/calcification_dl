@@ -2,4 +2,9 @@ defaults:
   - dataset/kios
 
 seed: 33
+
 model_dir: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src\\models"
+pretrained_weights: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src\\models\\pretrained.weights"
+
+sheba_mean: 0.1572722182674478
+sheba_std: 0.16270082671743363
