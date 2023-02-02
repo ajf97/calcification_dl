@@ -5,7 +5,7 @@ import numpy as np
 def normalize(image: np.ndarray, mask=None, type=np.float32):
     image_norm = image.astype(type) / 255
 
-    if mask:
+    if mask is not None:
         mask_norm = mask / 255.0
         return image_norm, mask_norm
     else:
@@ -16,10 +16,10 @@ def left_mamm(image: np.ndarray, mask=None):
     if image[:, :200, ...].sum() < image[:, -200:, ...].sum():
         image[:, :, ...] = image[:, ::-1, ...]
 
-        if mask:
+        if mask is not None:
             mask[:, :, ...] = mask[:, ::-1, ...]
 
-    if mask:
+    if mask is not None:
         return image, mask
     else:
         return image
@@ -59,7 +59,7 @@ def cut_mamm(image: np.ndarray, mask=None):
     h = image.shape[0]
     image = image[:h, :act_w]
 
-    if mask:
+    if mask is not None:
         mask = mask[:h, :act_w]
         return image, mask
     else:
@@ -84,7 +84,7 @@ def get_act_width(image: np.ndarray):
 
 
 def preprocess(image: np.ndarray, mask=None):
-    if mask:
+    if mask is not None:
         image, mask = normalize(image, mask)
         image, mask = left_mamm(image, mask)
         image = clean_mamm(image)
@@ -95,7 +95,7 @@ def preprocess(image: np.ndarray, mask=None):
         image = clean_mamm(image)
         image = cut_mamm(image)
 
-    if mask:
+    if mask is not None:
         return image, mask
     else:
         return image
