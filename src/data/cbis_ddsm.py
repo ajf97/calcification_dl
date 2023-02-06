@@ -9,10 +9,11 @@ from preprocessing.transforms import preprocess
 
 
 class CBISDataset(Dataset):
-    def __init__(self, img_dir: str, mask_dir: str, transform=False):
+    def __init__(self, img_dir: str, mask_dir: str, transform=False, width=300):
         self.img_dir = img_dir
         self.mask_dir = mask_dir
         self.transform = transform
+        self.width = width
 
     def __len__(self):
         files_list = os.listdir(self.img_dir)
@@ -35,6 +36,6 @@ class CBISDataset(Dataset):
         label = cv2.imread(mask_path, 0)
 
         if self.transform:
-            image, label = preprocess(image, label)
+            image, label = preprocess(image, label, self.width)
 
         return image, label
