@@ -1,4 +1,12 @@
 name: cbis_ddsm
 path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM"
-images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\IMAGES"
-masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\MASKS"
+
+all_images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\IMAGES"
+all_masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\MASKS"
+
+train_images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\train\\images"
+
+train_masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\train\\masks"
+
+test_images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\test\\images"
+test_masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\test\\masks"
