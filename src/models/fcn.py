@@ -1,13 +1,11 @@
 import cv2
 import torch
 from hydra import compose, initialize
-from omegaconf import OmegaConf
 from torch import nn
 from torchvision import transforms
 
 initialize(version_base=None, config_path="../../config")
 cfg = compose(config_name="config")
-print(OmegaConf.to_yaml(cfg))
 
 
 class CBlock(nn.Module):

@@ -1,4 +1,5 @@
 import cv2
+import imutils
 import numpy as np
 
 
@@ -83,13 +84,16 @@ def get_act_width(image: np.ndarray):
     return w
 
 
-def preprocess(image: np.ndarray, mask=None):
+def preprocess(image: np.ndarray, mask=None, width=300):
     if mask is not None:
+        image = imutils.resize(image, width)
+        mask = imutils.resize(mask, width)
         image, mask = normalize(image, mask)
         image, mask = left_mamm(image, mask)
         image = clean_mamm(image)
         image, mask = cut_mamm(image, mask)
     else:
+        image = imutils.resize(image, width)
         image = normalize(image)
         image = left_mamm(image)
         image = clean_mamm(image)
