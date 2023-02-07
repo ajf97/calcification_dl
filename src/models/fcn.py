@@ -64,13 +64,13 @@ class NetC(nn.Module):
         return self.pred(x)
 
 
-def initialize_model():
+def initialize_model(model_path):
     model = NetC(tag="encoder")
     model.eval()
 
     model.load_state_dict(
         torch.load(
-            cfg.pretrained_weights,
+            model_path,
             map_location=next(model.parameters()).device,
         )
     )
