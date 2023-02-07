@@ -1,4 +1,3 @@
-import cv2
 import torch
 from hydra import compose, initialize
 from torch import nn

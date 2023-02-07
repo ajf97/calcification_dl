@@ -1,90 +1,43 @@
-import os
-
 import cv2
-import matplotlib.pyplot as plt
 import numpy as np
+import omegaconf
 import streamlit as st
-import torch
-import torchvision.transforms as T
-from icecream import ic
-from loguru import logger
 from PIL import Image
 
-import models.unet_base as unet_base
-import preprocessing.first_experiments.image_transforms as imgt
-import preprocessing.first_experiments.target_transforms as tgt
+cfg = omegaconf.OmegaConf.load("config/config.yaml")
 
-st.header("Segmentación de calcificaciones en mamografías")
-st.write(
-    "Elige la imagen de una mamografía para obtener el correspondiente mapa de segmentación."
-)
+import sys
 
-uploaded_file = st.file_uploader("Sube la imagen")
+sys.path.insert(0, cfg.src_path)
 
+from models.fcn import initialize_model, predict
+from preprocessing import transforms
+from train.utils import apply_mask, segmentation_map
 
-def make_prediction(img, model, postprocess, device):
-    model.eval()
-    img = img.type(torch.FloatTensor)
-    img = img[None, ...]
-    x = img.to(device)  # to torch, send to device
+st.header("Segmenting calcifications on mammograms")
+st.write("Choose the input image to get the segmentation map")
 
-    with torch.no_grad():
-        out = model(x)  # send through model/network
-
-    out_softmax = torch.softmax(out, dim=1)  # perform softmax on outputs
-    result = postprocess(out_softmax)  # postprocess outputs
-
-    return result
-
-
-def predict(image):
-    if torch.cuda.is_available():
-        device = torch.device("cuda")
-    else:
-        device = torch.device("cpu")
-
-    model = unet_base.UNet(
-        in_channels=1,
-        out_channels=2,
-        n_blocks=4,
-        start_filters=32,
-        activation="relu",
-        normalization="batch",
-        conv_mode="same",
-        dim=2,
-    ).to(device)
-
-    model_path = "../src/models/cbis_ddsm_unet_base.pt"
-    torch.load(model_path, map_location=device)
-
-    return make_prediction(image, model, tgt.PostProcess(), device)
-
-
-def apply_mask(img, mask):
-    red = np.array([255, 0, 0], dtype=np.uint8)
-    img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
-
-    masked_img = np.where(mask[..., None], red, img)
-    output = cv2.addWeighted(img, 0.8, masked_img, 0.2, 0)
-
-    return output
+uploaded_file = st.file_uploader("Upload image")
 
 
 if uploaded_file is not None:
     # Load image and convert to numpy array
     image = Image.open(uploaded_file)
-    st.image(uploaded_file, caption="Imagen de entrada", use_column_width=True)
+    st.image(uploaded_file, caption="Input image", use_column_width=True)
 
     image_array = np.array(image)
+    image_array = cv2.cvtColor(image_array, cv2.COLOR_GRAY2RGB)
 
     # Preprocess image
-    image_preprocessing_pipeline = T.Compose([imgt.NormalizeMinMax(), T.ToTensor()])
-    img_preprocessed = image_preprocessing_pipeline(image_array)
+    image_preprocessed = transforms.preprocess(image_array, width=1500)
 
-    # Make prediction and display segmentation map
-    segmentation_map = predict(img_preprocessed)
-    st.image(segmentation_map, caption="Mapa de segmentación", use_column_width=True)
+    # Load the model and make the prediction
+    model = initialize_model(cfg.kios_model)
+    pred = predict(model, image_preprocessed)
+    sm = segmentation_map(pred, threshold=0.001)
+
+    st.image(sm, caption="Segmentation map", use_column_width=True, clamp=True)
 
     # Apply mask to image
-    masked_image = apply_mask(image_array, segmentation_map)
-    st.image(masked_image, caption="Calcificaciones detectadas", use_column_width=True)
+    masked_image = apply_mask(image_preprocessed, sm)
+    st.image(masked_image, caption="output", use_column_width=True, clamp=True)
