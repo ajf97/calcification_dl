@@ -1,10 +1,15 @@
 defaults:
   - dataset/kios
+  - train/train
+  - _self_
 
-seed: 33
+src_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src"
 
 model_dir: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src\\models"
 pretrained_weights: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src\\models\\pretrained.weights"
+
+kios_model: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src\\models\\1.weights"
+cbis_model: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src\\models\\2.weights"
 
 sheba_mean: 0.1572722182674478
 sheba_std: 0.16270082671743363
