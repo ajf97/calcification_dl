@@ -156,6 +156,8 @@ def run_experiment(cfg: DictConfig) -> None:
     with Live(save_dvc_exp=True) as live:
 
         live.log_param("epochs", epochs)
+        best_metric = 0.0
+
         for epoch in range(epochs):  # loop over the dataset multiple times
 
             running_loss = 0.0
@@ -174,13 +176,24 @@ def run_experiment(cfg: DictConfig) -> None:
                     optimizer=optimizer,
                 )
 
-                # Evaluate
-                metrics = evaluate_model(network, test_dataset, cfg.train.threshold)
+                # Evaluation of the model
+                eval_dict = {"train": train_dataset, "val": validation_dataset}
+                iou_val = 0.0
 
-                for metric_name, value in metrics.items():
-                    live.log_metric(metric_name, value)
+                for eval, value in eval_dict.items():
+                    metrics = evaluate_model(network, value, cfg.train.threshold)
+
+                    for metric_name, value in metrics.items():
+                        live.log_metric(metric_name + "_" + eval, value)
+
+                        if eval == "val":
+                            iou_val = metrics["iou"]
 
                 live.next_step()
+
+                # Save the best model
+                if iou_val > best_metric:
+                    torch.save(network.state_dict(), cfg.model_ouput)
 
                 # print statistics
                 running_loss += loss.item()
@@ -189,6 +202,12 @@ def run_experiment(cfg: DictConfig) -> None:
                     running_loss = 0.0
 
         print("Finished Training")
+
+        metrics = evaluate_model(network, test_dataset, cfg.train.threshold)
+        for metric_name, value in metrics.items():
+            live.log_metric(metric_name + "_test", value)
+
+        print("Evaluated on test set")
 
 
 # torch.save(network.state_dict(), "../src/models/1.weights")
