@@ -60,11 +60,10 @@ if bt and uploaded_file is not None:
 
     # Put the images in two columns
     tab1, tab2 = st.tabs(["📈 Output and probability heatmap", "🎭 Segmentation mask"])
-    col1, col2 = st.columns(2, gap="large")
 
     with tab1:
+        col1, col2 = st.columns(2, gap="large")
         with col1:
-            # st.header("Output")
             fig = plt.imshow(masked_image)
             pr = fig.make_image(renderer=None, unsampled=True)[0]
             fig = px.imshow(pr, aspect="equal")
@@ -72,15 +71,14 @@ if bt and uploaded_file is not None:
             col1.plotly_chart(fig, use_container_width=True)
 
         with col2:
-            # st.header("Probability heatmap")
             fig = px.imshow(predi, aspect="equal", color_continuous_scale="turbo")
             fig.update_layout(width=600, height=600)
             col2.plotly_chart(fig, use_container_width=True)
 
     with tab2:
-        # st.header("Segmentation map")
-        fig = px.imshow(sm, aspect="equal", color_continuous_scale="gray")
-        fig.update(layout_coloraxis_showscale=False)
-        fig.update_layout(width=600, height=600)
-        st.plotly_chart(fig, use_column_width=True, clamp=True)
-
+        col1, col2 = st.columns(2)
+        with col1:
+            fig = px.imshow(sm, aspect="equal", color_continuous_scale="gray")
+            fig.update(layout_coloraxis_showscale=False)
+            fig.update_layout(width=600, height=600)
+            col1.plotly_chart(fig, use_column_width=True, clamp=True)
