@@ -83,17 +83,35 @@ def run_experiment(cfg: DictConfig) -> None:
 
     if cfg.train.current_dataset == "kios":
         train_dataset = KIOSDataset(
-            cfg.dataset.train_images_path, cfg.dataset.train_masks_path, transform=True
+            cfg.dataset.train_images_path,
+            cfg.dataset.train_masks_path,
+            transform=True,
+            width=cfg.train.width,
         )
+
         test_dataset = KIOSDataset(
             cfg.dataset.test_images_path,
             cfg.dataset.test_masks_path,
             transform=True,
             width=cfg.train.width,
         )
+
+        if cfg.dataset.validation_images_path != "test":
+            validation_dataset = KIOSDataset(
+                cfg.dataset.validation_images_path,
+                cfg.dataset.validation_masks_path,
+                transform=True,
+                width=cfg.train.width,
+            )
+        else:
+            validation_dataset = test_dataset
+
     elif cfg.train.current_dataset == "cbis":
         train_dataset = CBISDataset(
-            cfg.dataset.train_images_path, cfg.dataset.train_masks_path, transform=True
+            cfg.dataset.train_images_path,
+            cfg.dataset.train_masks_path,
+            transform=True,
+            width=cfg.train.width,
         )
         test_dataset = CBISDataset(
             cfg.dataset.test_images_path,
@@ -101,6 +119,16 @@ def run_experiment(cfg: DictConfig) -> None:
             transform=True,
             width=cfg.train.width,
         )
+
+        if cfg.dataset.validation_images_path != "test":
+            validation_dataset = KIOSDataset(
+                cfg.dataset.validation_images_path,
+                cfg.dataset.validation_masks_path,
+                transform=True,
+                width=cfg.train.width,
+            )
+        else:
+            validation_dataset = test_dataset
     else:
         raise ValueError("Only two datasets are available: cbis and kios")
 

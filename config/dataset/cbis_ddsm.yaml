@@ -8,5 +8,9 @@ train_images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcificatio
 
 train_masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\train\\masks"
 
+validation_images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\validation\\images"
+
+validation_masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\validation\\masks"
+
 test_images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\test\\images"
 test_masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\CBIS-DDSM\\test\\masks"

@@ -8,5 +8,9 @@ train_images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcificatio
 
 train_masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\train\\masks"
 
+validation_images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\validation\\images"
+
+validation_masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\validation\\masks"
+
 test_images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\test\\images"
 test_masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\test\\masks"
