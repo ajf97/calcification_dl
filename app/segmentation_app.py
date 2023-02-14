@@ -1,3 +1,6 @@
+import os
+from tempfile import NamedTemporaryFile
+
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
@@ -36,13 +39,14 @@ with st.sidebar:
         "Prediction threshold", value=0.01, min_value=0.0, max_value=1.0, format="%f"
     )
 
-    uploaded_file = st.file_uploader("Upload the input image")
+    uploaded_image = st.file_uploader("Upload the input image")
+    uploaded_model = st.file_uploader("Upload the model file")
     bt = st.button("Predict")
 
 
-if bt and uploaded_file is not None:
+if bt and uploaded_image and uploaded_model is not None:
     # Load image and convert to numpy array
-    image = Image.open(uploaded_file)
+    image = Image.open(uploaded_image)
     image_array = np.array(image)
     image_array = cv2.cvtColor(image_array, cv2.COLOR_GRAY2RGB)
 
@@ -50,7 +54,12 @@ if bt and uploaded_file is not None:
     image_preprocessed = transforms.preprocess(image_array, width=width)
 
     # Load the model and make the prediction
-    model = initialize_model(cfg.kios_model)
+    with NamedTemporaryFile(dir=".", delete=False) as f:
+        f.write(uploaded_model.getbuffer())
+        model = initialize_model(f.name)
+        f.close()
+        os.unlink(f.name)
+
     pred = predict(model, image_preprocessed)
     predi = pred.copy()
     sm = segmentation_map(pred, threshold=threshold)
