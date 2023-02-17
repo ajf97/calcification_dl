@@ -10,13 +10,13 @@ import torch.nn as nn
 import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
-from dvclive import Live
 from omegaconf import DictConfig
 from torchmetrics import JaccardIndex
 from torchmetrics.functional import dice
 
 from data.cbis_ddsm import CBISDataset
 from data.kios import KIOSDataset
+from dvclive import Live
 from models.fcn import initialize_model, predict
 from utils import segmentation_map
 
@@ -121,7 +121,7 @@ def run_experiment(cfg: DictConfig) -> None:
         )
 
         if cfg.dataset.validation_images_path != "test":
-            validation_dataset = KIOSDataset(
+            validation_dataset = CBISDataset(
                 cfg.dataset.validation_images_path,
                 cfg.dataset.validation_masks_path,
                 transform=True,
@@ -177,7 +177,7 @@ def run_experiment(cfg: DictConfig) -> None:
                 )
 
                 # Evaluation of the model
-                eval_dict = {"train": train_dataset, "val": validation_dataset}
+                eval_dict = {"val": validation_dataset}
                 iou_val = 0.0
 
                 for eval, value in eval_dict.items():
@@ -193,7 +193,7 @@ def run_experiment(cfg: DictConfig) -> None:
 
                 # Save the best model
                 if iou_val > best_metric:
-                    torch.save(network.state_dict(), cfg.model_ouput)
+                    torch.save(network.state_dict(), cfg.train.model_output)
 
                 # print statistics
                 running_loss += loss.item()
