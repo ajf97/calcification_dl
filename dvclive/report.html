@@ -1,0 +1,3434 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="5">
+    <title>DVC Plot</title>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.18.2"></script>
+    
+    <style>
+        table {
+            border-spacing: 15px;
+        }
+    </style>
+</head>
+<body>
+    
+        <div id="params_yaml" style="text-align: center; padding: 10x">
+            <p>params_yaml</p>
+            <div style="display: flex;justify-content: center;">
+                <table>
+<thead>
+<tr><th style="text-align: right;">  epochs</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">      10</td></tr>
+</tbody>
+</table>
+            </div>
+        </div>
+
+        <div id="metrics_json" style="text-align: center; padding: 10x">
+            <p>metrics_json</p>
+            <div style="display: flex;justify-content: center;">
+                <table>
+<thead>
+<tr><th style="text-align: right;">  iou_val</th><th style="text-align: right;">  dice_score_val</th><th style="text-align: right;">  step</th><th style="text-align: right;">  iou_test</th><th style="text-align: right;">  dice_score_test</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;"> 0.549497</td><td style="text-align: right;">        0.704964</td><td style="text-align: right;">   299</td><td style="text-align: right;">  0.395354</td><td style="text-align: right;">         0.516688</td></tr>
+</tbody>
+</table>
+            </div>
+        </div>
+
+    <div id = "static_dice_score_test">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "values": [
+    {
+        "dice_score_test": "0.516688137847398",
+        "rev": "workspace",
+        "step": "300"
+    }
+]
+    },
+    "title": "",
+    "width": 300,
+    "height": 300,
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "step",
+                    "type": "quantitative",
+                    "title": "step"
+                },
+                "y": {
+                    "field": "dice_score_test",
+                    "type": "quantitative",
+                    "title": "dice_score_test",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                },
+                "tooltip": [
+                    {
+                        "field": "step",
+                        "type": "quantitative"
+                    },
+                    {
+                        "field": "dice_score_test",
+                        "type": "quantitative"
+                    },
+                    {
+                        "field": "rev",
+                        "type": "nominal"
+                    }
+                ]
+            },
+            "layer": [
+                {
+                    "mark": "line"
+                },
+                {
+                    "transform": [
+                        {
+                            "filter": {
+                                "param": "hover",
+                                "empty": false
+                            }
+                        }
+                    ],
+                    "mark": "circle"
+                },
+                {
+                    "mark": "rule",
+                    "params": [
+                        {
+                            "name": "hover",
+                            "select": {
+                                "type": "point",
+                                "on": "mouseover",
+                                "nearest": true
+                            }
+                        }
+                    ],
+                    "encoding": {
+                        "color": {
+                            "condition": {
+                                "param": "hover",
+                                "empty": false,
+                                "value": "1"
+                            },
+                            "value": "transparent"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+;
+            vegaEmbed('#static_dice_score_test', spec);
+        </script>
+    </div>
+    
+
+    <div id = "static_dice_score_val">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "values": [
+    {
+        "dice_score_val": "0.22418418526649475",
+        "rev": "workspace",
+        "step": "0"
+    },
+    {
+        "dice_score_val": "0.3002919889986515",
+        "rev": "workspace",
+        "step": "1"
+    },
+    {
+        "dice_score_val": "0.40418241918087006",
+        "rev": "workspace",
+        "step": "2"
+    },
+    {
+        "dice_score_val": "0.48005586117506027",
+        "rev": "workspace",
+        "step": "3"
+    },
+    {
+        "dice_score_val": "0.520018957555294",
+        "rev": "workspace",
+        "step": "4"
+    },
+    {
+        "dice_score_val": "0.5432062447071075",
+        "rev": "workspace",
+        "step": "5"
+    },
+    {
+        "dice_score_val": "0.5565020069479942",
+        "rev": "workspace",
+        "step": "6"
+    },
+    {
+        "dice_score_val": "0.5663318559527397",
+        "rev": "workspace",
+        "step": "7"
+    },
+    {
+        "dice_score_val": "0.5758583247661591",
+        "rev": "workspace",
+        "step": "8"
+    },
+    {
+        "dice_score_val": "0.5831564962863922",
+        "rev": "workspace",
+        "step": "9"
+    },
+    {
+        "dice_score_val": "0.5860655382275581",
+        "rev": "workspace",
+        "step": "10"
+    },
+    {
+        "dice_score_val": "0.5905943512916565",
+        "rev": "workspace",
+        "step": "11"
+    },
+    {
+        "dice_score_val": "0.5936363041400909",
+        "rev": "workspace",
+        "step": "12"
+    },
+    {
+        "dice_score_val": "0.5959318727254868",
+        "rev": "workspace",
+        "step": "13"
+    },
+    {
+        "dice_score_val": "0.6052134931087494",
+        "rev": "workspace",
+        "step": "14"
+    },
+    {
+        "dice_score_val": "0.609792485833168",
+        "rev": "workspace",
+        "step": "15"
+    },
+    {
+        "dice_score_val": "0.612861692905426",
+        "rev": "workspace",
+        "step": "16"
+    },
+    {
+        "dice_score_val": "0.6174119412899017",
+        "rev": "workspace",
+        "step": "17"
+    },
+    {
+        "dice_score_val": "0.621791660785675",
+        "rev": "workspace",
+        "step": "18"
+    },
+    {
+        "dice_score_val": "0.6246234476566315",
+        "rev": "workspace",
+        "step": "19"
+    },
+    {
+        "dice_score_val": "0.6283120214939117",
+        "rev": "workspace",
+        "step": "20"
+    },
+    {
+        "dice_score_val": "0.6317325979471207",
+        "rev": "workspace",
+        "step": "21"
+    },
+    {
+        "dice_score_val": "0.6318549513816833",
+        "rev": "workspace",
+        "step": "22"
+    },
+    {
+        "dice_score_val": "0.6325713396072388",
+        "rev": "workspace",
+        "step": "23"
+    },
+    {
+        "dice_score_val": "0.6343404203653336",
+        "rev": "workspace",
+        "step": "24"
+    },
+    {
+        "dice_score_val": "0.6362313479185104",
+        "rev": "workspace",
+        "step": "25"
+    },
+    {
+        "dice_score_val": "0.637874960899353",
+        "rev": "workspace",
+        "step": "26"
+    },
+    {
+        "dice_score_val": "0.6434924006462097",
+        "rev": "workspace",
+        "step": "27"
+    },
+    {
+        "dice_score_val": "0.6481720209121704",
+        "rev": "workspace",
+        "step": "28"
+    },
+    {
+        "dice_score_val": "0.6487246006727219",
+        "rev": "workspace",
+        "step": "29"
+    },
+    {
+        "dice_score_val": "0.6497552692890167",
+        "rev": "workspace",
+        "step": "30"
+    },
+    {
+        "dice_score_val": "0.6510453969240189",
+        "rev": "workspace",
+        "step": "31"
+    },
+    {
+        "dice_score_val": "0.6530949473381042",
+        "rev": "workspace",
+        "step": "32"
+    },
+    {
+        "dice_score_val": "0.6548249274492264",
+        "rev": "workspace",
+        "step": "33"
+    },
+    {
+        "dice_score_val": "0.6556845009326935",
+        "rev": "workspace",
+        "step": "34"
+    },
+    {
+        "dice_score_val": "0.6557530760765076",
+        "rev": "workspace",
+        "step": "35"
+    },
+    {
+        "dice_score_val": "0.6567502021789551",
+        "rev": "workspace",
+        "step": "36"
+    },
+    {
+        "dice_score_val": "0.65780109167099",
+        "rev": "workspace",
+        "step": "37"
+    },
+    {
+        "dice_score_val": "0.6583426296710968",
+        "rev": "workspace",
+        "step": "38"
+    },
+    {
+        "dice_score_val": "0.6597508192062378",
+        "rev": "workspace",
+        "step": "39"
+    },
+    {
+        "dice_score_val": "0.6602670401334763",
+        "rev": "workspace",
+        "step": "40"
+    },
+    {
+        "dice_score_val": "0.6614420264959335",
+        "rev": "workspace",
+        "step": "41"
+    },
+    {
+        "dice_score_val": "0.6616850346326828",
+        "rev": "workspace",
+        "step": "42"
+    },
+    {
+        "dice_score_val": "0.6619277149438858",
+        "rev": "workspace",
+        "step": "43"
+    },
+    {
+        "dice_score_val": "0.6623454988002777",
+        "rev": "workspace",
+        "step": "44"
+    },
+    {
+        "dice_score_val": "0.6625209301710129",
+        "rev": "workspace",
+        "step": "45"
+    },
+    {
+        "dice_score_val": "0.6626030951738358",
+        "rev": "workspace",
+        "step": "46"
+    },
+    {
+        "dice_score_val": "0.6626577079296112",
+        "rev": "workspace",
+        "step": "47"
+    },
+    {
+        "dice_score_val": "0.6631911844015121",
+        "rev": "workspace",
+        "step": "48"
+    },
+    {
+        "dice_score_val": "0.6627078354358673",
+        "rev": "workspace",
+        "step": "49"
+    },
+    {
+        "dice_score_val": "0.6626253873109818",
+        "rev": "workspace",
+        "step": "50"
+    },
+    {
+        "dice_score_val": "0.6626799255609512",
+        "rev": "workspace",
+        "step": "51"
+    },
+    {
+        "dice_score_val": "0.6643286496400833",
+        "rev": "workspace",
+        "step": "52"
+    },
+    {
+        "dice_score_val": "0.6654597818851471",
+        "rev": "workspace",
+        "step": "53"
+    },
+    {
+        "dice_score_val": "0.6656980216503143",
+        "rev": "workspace",
+        "step": "54"
+    },
+    {
+        "dice_score_val": "0.6658170074224472",
+        "rev": "workspace",
+        "step": "55"
+    },
+    {
+        "dice_score_val": "0.6658807247877121",
+        "rev": "workspace",
+        "step": "56"
+    },
+    {
+        "dice_score_val": "0.6658807247877121",
+        "rev": "workspace",
+        "step": "57"
+    },
+    {
+        "dice_score_val": "0.6661653220653534",
+        "rev": "workspace",
+        "step": "58"
+    },
+    {
+        "dice_score_val": "0.6661653220653534",
+        "rev": "workspace",
+        "step": "59"
+    },
+    {
+        "dice_score_val": "0.6670470088720322",
+        "rev": "workspace",
+        "step": "60"
+    },
+    {
+        "dice_score_val": "0.6670546978712082",
+        "rev": "workspace",
+        "step": "61"
+    },
+    {
+        "dice_score_val": "0.6670546978712082",
+        "rev": "workspace",
+        "step": "62"
+    },
+    {
+        "dice_score_val": "0.6674725711345673",
+        "rev": "workspace",
+        "step": "63"
+    },
+    {
+        "dice_score_val": "0.6683056354522705",
+        "rev": "workspace",
+        "step": "64"
+    },
+    {
+        "dice_score_val": "0.6684233993291855",
+        "rev": "workspace",
+        "step": "65"
+    },
+    {
+        "dice_score_val": "0.6684233993291855",
+        "rev": "workspace",
+        "step": "66"
+    },
+    {
+        "dice_score_val": "0.6682569831609726",
+        "rev": "workspace",
+        "step": "67"
+    },
+    {
+        "dice_score_val": "0.6678471714258194",
+        "rev": "workspace",
+        "step": "68"
+    },
+    {
+        "dice_score_val": "0.6680266857147217",
+        "rev": "workspace",
+        "step": "69"
+    },
+    {
+        "dice_score_val": "0.6678607612848282",
+        "rev": "workspace",
+        "step": "70"
+    },
+    {
+        "dice_score_val": "0.6679780185222626",
+        "rev": "workspace",
+        "step": "71"
+    },
+    {
+        "dice_score_val": "0.6680951714515686",
+        "rev": "workspace",
+        "step": "72"
+    },
+    {
+        "dice_score_val": "0.6681504845619202",
+        "rev": "workspace",
+        "step": "73"
+    },
+    {
+        "dice_score_val": "0.6681504845619202",
+        "rev": "workspace",
+        "step": "74"
+    },
+    {
+        "dice_score_val": "0.6689181923866272",
+        "rev": "workspace",
+        "step": "75"
+    },
+    {
+        "dice_score_val": "0.6690350472927094",
+        "rev": "workspace",
+        "step": "76"
+    },
+    {
+        "dice_score_val": "0.6689796596765518",
+        "rev": "workspace",
+        "step": "77"
+    },
+    {
+        "dice_score_val": "0.671009823679924",
+        "rev": "workspace",
+        "step": "78"
+    },
+    {
+        "dice_score_val": "0.6723460704088211",
+        "rev": "workspace",
+        "step": "79"
+    },
+    {
+        "dice_score_val": "0.672229215502739",
+        "rev": "workspace",
+        "step": "80"
+    },
+    {
+        "dice_score_val": "0.6727032214403152",
+        "rev": "workspace",
+        "step": "81"
+    },
+    {
+        "dice_score_val": "0.672524631023407",
+        "rev": "workspace",
+        "step": "82"
+    },
+    {
+        "dice_score_val": "0.673302635550499",
+        "rev": "workspace",
+        "step": "83"
+    },
+    {
+        "dice_score_val": "0.6752988249063492",
+        "rev": "workspace",
+        "step": "84"
+    },
+    {
+        "dice_score_val": "0.6757213622331619",
+        "rev": "workspace",
+        "step": "85"
+    },
+    {
+        "dice_score_val": "0.6762013286352158",
+        "rev": "workspace",
+        "step": "86"
+    },
+    {
+        "dice_score_val": "0.6762013286352158",
+        "rev": "workspace",
+        "step": "87"
+    },
+    {
+        "dice_score_val": "0.6767944246530533",
+        "rev": "workspace",
+        "step": "88"
+    },
+    {
+        "dice_score_val": "0.6765215247869492",
+        "rev": "workspace",
+        "step": "89"
+    },
+    {
+        "dice_score_val": "0.676410362124443",
+        "rev": "workspace",
+        "step": "90"
+    },
+    {
+        "dice_score_val": "0.6766445487737656",
+        "rev": "workspace",
+        "step": "91"
+    },
+    {
+        "dice_score_val": "0.6767615079879761",
+        "rev": "workspace",
+        "step": "92"
+    },
+    {
+        "dice_score_val": "0.6768783926963806",
+        "rev": "workspace",
+        "step": "93"
+    },
+    {
+        "dice_score_val": "0.6776531636714935",
+        "rev": "workspace",
+        "step": "94"
+    },
+    {
+        "dice_score_val": "0.6778256446123123",
+        "rev": "workspace",
+        "step": "95"
+    },
+    {
+        "dice_score_val": "0.6779981106519699",
+        "rev": "workspace",
+        "step": "96"
+    },
+    {
+        "dice_score_val": "0.679532989859581",
+        "rev": "workspace",
+        "step": "97"
+    },
+    {
+        "dice_score_val": "0.6794770956039429",
+        "rev": "workspace",
+        "step": "98"
+    },
+    {
+        "dice_score_val": "0.6803307682275772",
+        "rev": "workspace",
+        "step": "99"
+    },
+    {
+        "dice_score_val": "0.6813209801912308",
+        "rev": "workspace",
+        "step": "100"
+    },
+    {
+        "dice_score_val": "0.6814374327659607",
+        "rev": "workspace",
+        "step": "101"
+    },
+    {
+        "dice_score_val": "0.6822419911623001",
+        "rev": "workspace",
+        "step": "102"
+    },
+    {
+        "dice_score_val": "0.6829170137643814",
+        "rev": "workspace",
+        "step": "103"
+    },
+    {
+        "dice_score_val": "0.683612123131752",
+        "rev": "workspace",
+        "step": "104"
+    },
+    {
+        "dice_score_val": "0.6862991154193878",
+        "rev": "workspace",
+        "step": "105"
+    },
+    {
+        "dice_score_val": "0.6865107417106628",
+        "rev": "workspace",
+        "step": "106"
+    },
+    {
+        "dice_score_val": "0.6866228580474854",
+        "rev": "workspace",
+        "step": "107"
+    },
+    {
+        "dice_score_val": "0.6889258027076721",
+        "rev": "workspace",
+        "step": "108"
+    },
+    {
+        "dice_score_val": "0.6889819651842117",
+        "rev": "workspace",
+        "step": "109"
+    },
+    {
+        "dice_score_val": "0.6889819651842117",
+        "rev": "workspace",
+        "step": "110"
+    },
+    {
+        "dice_score_val": "0.6899127215147018",
+        "rev": "workspace",
+        "step": "111"
+    },
+    {
+        "dice_score_val": "0.6899085938930511",
+        "rev": "workspace",
+        "step": "112"
+    },
+    {
+        "dice_score_val": "0.690869152545929",
+        "rev": "workspace",
+        "step": "113"
+    },
+    {
+        "dice_score_val": "0.6914938241243362",
+        "rev": "workspace",
+        "step": "114"
+    },
+    {
+        "dice_score_val": "0.6916068494319916",
+        "rev": "workspace",
+        "step": "115"
+    },
+    {
+        "dice_score_val": "0.6916068494319916",
+        "rev": "workspace",
+        "step": "116"
+    },
+    {
+        "dice_score_val": "0.6916634142398834",
+        "rev": "workspace",
+        "step": "117"
+    },
+    {
+        "dice_score_val": "0.6914899200201035",
+        "rev": "workspace",
+        "step": "118"
+    },
+    {
+        "dice_score_val": "0.6909739971160889",
+        "rev": "workspace",
+        "step": "119"
+    },
+    {
+        "dice_score_val": "0.6904602199792862",
+        "rev": "workspace",
+        "step": "120"
+    },
+    {
+        "dice_score_val": "0.6904602199792862",
+        "rev": "workspace",
+        "step": "121"
+    },
+    {
+        "dice_score_val": "0.6909134387969971",
+        "rev": "workspace",
+        "step": "122"
+    },
+    {
+        "dice_score_val": "0.6907962262630463",
+        "rev": "workspace",
+        "step": "123"
+    },
+    {
+        "dice_score_val": "0.6906832158565521",
+        "rev": "workspace",
+        "step": "124"
+    },
+    {
+        "dice_score_val": "0.6906832158565521",
+        "rev": "workspace",
+        "step": "125"
+    },
+    {
+        "dice_score_val": "0.6908527910709381",
+        "rev": "workspace",
+        "step": "126"
+    },
+    {
+        "dice_score_val": "0.6908527910709381",
+        "rev": "workspace",
+        "step": "127"
+    },
+    {
+        "dice_score_val": "0.6905615627765656",
+        "rev": "workspace",
+        "step": "128"
+    },
+    {
+        "dice_score_val": "0.6905615627765656",
+        "rev": "workspace",
+        "step": "129"
+    },
+    {
+        "dice_score_val": "0.6913869082927704",
+        "rev": "workspace",
+        "step": "130"
+    },
+    {
+        "dice_score_val": "0.6912694424390793",
+        "rev": "workspace",
+        "step": "131"
+    },
+    {
+        "dice_score_val": "0.6912694424390793",
+        "rev": "workspace",
+        "step": "132"
+    },
+    {
+        "dice_score_val": "0.6912694424390793",
+        "rev": "workspace",
+        "step": "133"
+    },
+    {
+        "dice_score_val": "0.6913259476423264",
+        "rev": "workspace",
+        "step": "134"
+    },
+    {
+        "dice_score_val": "0.6913259476423264",
+        "rev": "workspace",
+        "step": "135"
+    },
+    {
+        "dice_score_val": "0.6914390623569489",
+        "rev": "workspace",
+        "step": "136"
+    },
+    {
+        "dice_score_val": "0.6917157918214798",
+        "rev": "workspace",
+        "step": "137"
+    },
+    {
+        "dice_score_val": "0.6921122670173645",
+        "rev": "workspace",
+        "step": "138"
+    },
+    {
+        "dice_score_val": "0.6926854997873306",
+        "rev": "workspace",
+        "step": "139"
+    },
+    {
+        "dice_score_val": "0.6919698417186737",
+        "rev": "workspace",
+        "step": "140"
+    },
+    {
+        "dice_score_val": "0.6928546875715256",
+        "rev": "workspace",
+        "step": "141"
+    },
+    {
+        "dice_score_val": "0.6929115206003189",
+        "rev": "workspace",
+        "step": "142"
+    },
+    {
+        "dice_score_val": "0.6927933990955353",
+        "rev": "workspace",
+        "step": "143"
+    },
+    {
+        "dice_score_val": "0.6926752030849457",
+        "rev": "workspace",
+        "step": "144"
+    },
+    {
+        "dice_score_val": "0.6926752030849457",
+        "rev": "workspace",
+        "step": "145"
+    },
+    {
+        "dice_score_val": "0.6925616264343262",
+        "rev": "workspace",
+        "step": "146"
+    },
+    {
+        "dice_score_val": "0.6926797926425934",
+        "rev": "workspace",
+        "step": "147"
+    },
+    {
+        "dice_score_val": "0.6922819465398788",
+        "rev": "workspace",
+        "step": "148"
+    },
+    {
+        "dice_score_val": "0.6922252178192139",
+        "rev": "workspace",
+        "step": "149"
+    },
+    {
+        "dice_score_val": "0.6918862611055374",
+        "rev": "workspace",
+        "step": "150"
+    },
+    {
+        "dice_score_val": "0.6919474005699158",
+        "rev": "workspace",
+        "step": "151"
+    },
+    {
+        "dice_score_val": "0.6921828538179398",
+        "rev": "workspace",
+        "step": "152"
+    },
+    {
+        "dice_score_val": "0.6921261250972748",
+        "rev": "workspace",
+        "step": "153"
+    },
+    {
+        "dice_score_val": "0.6923612058162689",
+        "rev": "workspace",
+        "step": "154"
+    },
+    {
+        "dice_score_val": "0.6923044770956039",
+        "rev": "workspace",
+        "step": "155"
+    },
+    {
+        "dice_score_val": "0.6927613765001297",
+        "rev": "workspace",
+        "step": "156"
+    },
+    {
+        "dice_score_val": "0.6927613765001297",
+        "rev": "workspace",
+        "step": "157"
+    },
+    {
+        "dice_score_val": "0.6928181052207947",
+        "rev": "workspace",
+        "step": "158"
+    },
+    {
+        "dice_score_val": "0.6928181052207947",
+        "rev": "workspace",
+        "step": "159"
+    },
+    {
+        "dice_score_val": "0.6951148360967636",
+        "rev": "workspace",
+        "step": "160"
+    },
+    {
+        "dice_score_val": "0.6965164691209793",
+        "rev": "workspace",
+        "step": "161"
+    },
+    {
+        "dice_score_val": "0.6969801932573318",
+        "rev": "workspace",
+        "step": "162"
+    },
+    {
+        "dice_score_val": "0.6970369666814804",
+        "rev": "workspace",
+        "step": "163"
+    },
+    {
+        "dice_score_val": "0.6980472058057785",
+        "rev": "workspace",
+        "step": "164"
+    },
+    {
+        "dice_score_val": "0.6980472058057785",
+        "rev": "workspace",
+        "step": "165"
+    },
+    {
+        "dice_score_val": "0.6980472058057785",
+        "rev": "workspace",
+        "step": "166"
+    },
+    {
+        "dice_score_val": "0.6980472058057785",
+        "rev": "workspace",
+        "step": "167"
+    },
+    {
+        "dice_score_val": "0.6980472058057785",
+        "rev": "workspace",
+        "step": "168"
+    },
+    {
+        "dice_score_val": "0.6980472058057785",
+        "rev": "workspace",
+        "step": "169"
+    },
+    {
+        "dice_score_val": "0.6980472058057785",
+        "rev": "workspace",
+        "step": "170"
+    },
+    {
+        "dice_score_val": "0.6977045685052872",
+        "rev": "workspace",
+        "step": "171"
+    },
+    {
+        "dice_score_val": "0.6972431391477585",
+        "rev": "workspace",
+        "step": "172"
+    },
+    {
+        "dice_score_val": "0.6973035633563995",
+        "rev": "workspace",
+        "step": "173"
+    },
+    {
+        "dice_score_val": "0.6973035633563995",
+        "rev": "workspace",
+        "step": "174"
+    },
+    {
+        "dice_score_val": "0.697420746088028",
+        "rev": "workspace",
+        "step": "175"
+    },
+    {
+        "dice_score_val": "0.6973070651292801",
+        "rev": "workspace",
+        "step": "176"
+    },
+    {
+        "dice_score_val": "0.6972502917051315",
+        "rev": "workspace",
+        "step": "177"
+    },
+    {
+        "dice_score_val": "0.6970197558403015",
+        "rev": "workspace",
+        "step": "178"
+    },
+    {
+        "dice_score_val": "0.6970197558403015",
+        "rev": "workspace",
+        "step": "179"
+    },
+    {
+        "dice_score_val": "0.6971971690654755",
+        "rev": "workspace",
+        "step": "180"
+    },
+    {
+        "dice_score_val": "0.6965643912553787",
+        "rev": "workspace",
+        "step": "181"
+    },
+    {
+        "dice_score_val": "0.6965643912553787",
+        "rev": "workspace",
+        "step": "182"
+    },
+    {
+        "dice_score_val": "0.6965078115463257",
+        "rev": "workspace",
+        "step": "183"
+    },
+    {
+        "dice_score_val": "0.697354793548584",
+        "rev": "workspace",
+        "step": "184"
+    },
+    {
+        "dice_score_val": "0.697695717215538",
+        "rev": "workspace",
+        "step": "185"
+    },
+    {
+        "dice_score_val": "0.697695717215538",
+        "rev": "workspace",
+        "step": "186"
+    },
+    {
+        "dice_score_val": "0.697695717215538",
+        "rev": "workspace",
+        "step": "187"
+    },
+    {
+        "dice_score_val": "0.6978088468313217",
+        "rev": "workspace",
+        "step": "188"
+    },
+    {
+        "dice_score_val": "0.6978654712438583",
+        "rev": "workspace",
+        "step": "189"
+    },
+    {
+        "dice_score_val": "0.6978654712438583",
+        "rev": "workspace",
+        "step": "190"
+    },
+    {
+        "dice_score_val": "0.698439359664917",
+        "rev": "workspace",
+        "step": "191"
+    },
+    {
+        "dice_score_val": "0.6984960436820984",
+        "rev": "workspace",
+        "step": "192"
+    },
+    {
+        "dice_score_val": "0.6984960436820984",
+        "rev": "workspace",
+        "step": "193"
+    },
+    {
+        "dice_score_val": "0.6989516466856003",
+        "rev": "workspace",
+        "step": "194"
+    },
+    {
+        "dice_score_val": "0.700315460562706",
+        "rev": "workspace",
+        "step": "195"
+    },
+    {
+        "dice_score_val": "0.7008337527513504",
+        "rev": "workspace",
+        "step": "196"
+    },
+    {
+        "dice_score_val": "0.7008337527513504",
+        "rev": "workspace",
+        "step": "197"
+    },
+    {
+        "dice_score_val": "0.7008337527513504",
+        "rev": "workspace",
+        "step": "198"
+    },
+    {
+        "dice_score_val": "0.7008337527513504",
+        "rev": "workspace",
+        "step": "199"
+    },
+    {
+        "dice_score_val": "0.7008337527513504",
+        "rev": "workspace",
+        "step": "200"
+    },
+    {
+        "dice_score_val": "0.7008337527513504",
+        "rev": "workspace",
+        "step": "201"
+    },
+    {
+        "dice_score_val": "0.7008906453847885",
+        "rev": "workspace",
+        "step": "202"
+    },
+    {
+        "dice_score_val": "0.7008906453847885",
+        "rev": "workspace",
+        "step": "203"
+    },
+    {
+        "dice_score_val": "0.7008906453847885",
+        "rev": "workspace",
+        "step": "204"
+    },
+    {
+        "dice_score_val": "0.7008906453847885",
+        "rev": "workspace",
+        "step": "205"
+    },
+    {
+        "dice_score_val": "0.7008906453847885",
+        "rev": "workspace",
+        "step": "206"
+    },
+    {
+        "dice_score_val": "0.7001136839389801",
+        "rev": "workspace",
+        "step": "207"
+    },
+    {
+        "dice_score_val": "0.7001136839389801",
+        "rev": "workspace",
+        "step": "208"
+    },
+    {
+        "dice_score_val": "0.7001136839389801",
+        "rev": "workspace",
+        "step": "209"
+    },
+    {
+        "dice_score_val": "0.7001136839389801",
+        "rev": "workspace",
+        "step": "210"
+    },
+    {
+        "dice_score_val": "0.7001136839389801",
+        "rev": "workspace",
+        "step": "211"
+    },
+    {
+        "dice_score_val": "0.7005766183137894",
+        "rev": "workspace",
+        "step": "212"
+    },
+    {
+        "dice_score_val": "0.7005766183137894",
+        "rev": "workspace",
+        "step": "213"
+    },
+    {
+        "dice_score_val": "0.7025535851716995",
+        "rev": "workspace",
+        "step": "214"
+    },
+    {
+        "dice_score_val": "0.7055470496416092",
+        "rev": "workspace",
+        "step": "215"
+    },
+    {
+        "dice_score_val": "0.7064089328050613",
+        "rev": "workspace",
+        "step": "216"
+    },
+    {
+        "dice_score_val": "0.707452729344368",
+        "rev": "workspace",
+        "step": "217"
+    },
+    {
+        "dice_score_val": "0.7083902359008789",
+        "rev": "workspace",
+        "step": "218"
+    },
+    {
+        "dice_score_val": "0.7088625282049179",
+        "rev": "workspace",
+        "step": "219"
+    },
+    {
+        "dice_score_val": "0.7088625282049179",
+        "rev": "workspace",
+        "step": "220"
+    },
+    {
+        "dice_score_val": "0.7089766412973404",
+        "rev": "workspace",
+        "step": "221"
+    },
+    {
+        "dice_score_val": "0.7099711149930954",
+        "rev": "workspace",
+        "step": "222"
+    },
+    {
+        "dice_score_val": "0.7100854367017746",
+        "rev": "workspace",
+        "step": "223"
+    },
+    {
+        "dice_score_val": "0.7104427367448807",
+        "rev": "workspace",
+        "step": "224"
+    },
+    {
+        "dice_score_val": "0.7104999423027039",
+        "rev": "workspace",
+        "step": "225"
+    },
+    {
+        "dice_score_val": "0.7103824764490128",
+        "rev": "workspace",
+        "step": "226"
+    },
+    {
+        "dice_score_val": "0.7104366272687912",
+        "rev": "workspace",
+        "step": "227"
+    },
+    {
+        "dice_score_val": "0.7028976231813431",
+        "rev": "workspace",
+        "step": "228"
+    },
+    {
+        "dice_score_val": "0.7028944939374924",
+        "rev": "workspace",
+        "step": "229"
+    },
+    {
+        "dice_score_val": "0.7030093222856522",
+        "rev": "workspace",
+        "step": "230"
+    },
+    {
+        "dice_score_val": "0.7020303606987",
+        "rev": "workspace",
+        "step": "231"
+    },
+    {
+        "dice_score_val": "0.702627032995224",
+        "rev": "workspace",
+        "step": "232"
+    },
+    {
+        "dice_score_val": "0.7026240080595016",
+        "rev": "workspace",
+        "step": "233"
+    },
+    {
+        "dice_score_val": "0.7026815414428711",
+        "rev": "workspace",
+        "step": "234"
+    },
+    {
+        "dice_score_val": "0.7055501788854599",
+        "rev": "workspace",
+        "step": "235"
+    },
+    {
+        "dice_score_val": "0.7055501788854599",
+        "rev": "workspace",
+        "step": "236"
+    },
+    {
+        "dice_score_val": "0.7054320722818375",
+        "rev": "workspace",
+        "step": "237"
+    },
+    {
+        "dice_score_val": "0.7053138762712479",
+        "rev": "workspace",
+        "step": "238"
+    },
+    {
+        "dice_score_val": "0.7048327326774597",
+        "rev": "workspace",
+        "step": "239"
+    },
+    {
+        "dice_score_val": "0.7047752439975739",
+        "rev": "workspace",
+        "step": "240"
+    },
+    {
+        "dice_score_val": "0.7047178000211716",
+        "rev": "workspace",
+        "step": "241"
+    },
+    {
+        "dice_score_val": "0.7046603858470917",
+        "rev": "workspace",
+        "step": "242"
+    },
+    {
+        "dice_score_val": "0.7046030163764954",
+        "rev": "workspace",
+        "step": "243"
+    },
+    {
+        "dice_score_val": "0.7046030163764954",
+        "rev": "workspace",
+        "step": "244"
+    },
+    {
+        "dice_score_val": "0.7046030163764954",
+        "rev": "workspace",
+        "step": "245"
+    },
+    {
+        "dice_score_val": "0.7060194760560989",
+        "rev": "workspace",
+        "step": "246"
+    },
+    {
+        "dice_score_val": "0.7060194760560989",
+        "rev": "workspace",
+        "step": "247"
+    },
+    {
+        "dice_score_val": "0.7060194760560989",
+        "rev": "workspace",
+        "step": "248"
+    },
+    {
+        "dice_score_val": "0.7060194760560989",
+        "rev": "workspace",
+        "step": "249"
+    },
+    {
+        "dice_score_val": "0.7065006196498871",
+        "rev": "workspace",
+        "step": "250"
+    },
+    {
+        "dice_score_val": "0.7065006196498871",
+        "rev": "workspace",
+        "step": "251"
+    },
+    {
+        "dice_score_val": "0.7051493227481842",
+        "rev": "workspace",
+        "step": "252"
+    },
+    {
+        "dice_score_val": "0.7051493227481842",
+        "rev": "workspace",
+        "step": "253"
+    },
+    {
+        "dice_score_val": "0.7052066773176193",
+        "rev": "workspace",
+        "step": "254"
+    },
+    {
+        "dice_score_val": "0.7052066773176193",
+        "rev": "workspace",
+        "step": "255"
+    },
+    {
+        "dice_score_val": "0.7052640616893768",
+        "rev": "workspace",
+        "step": "256"
+    },
+    {
+        "dice_score_val": "0.7053214907646179",
+        "rev": "workspace",
+        "step": "257"
+    },
+    {
+        "dice_score_val": "0.7053214907646179",
+        "rev": "workspace",
+        "step": "258"
+    },
+    {
+        "dice_score_val": "0.7062710821628571",
+        "rev": "workspace",
+        "step": "259"
+    },
+    {
+        "dice_score_val": "0.7068587839603424",
+        "rev": "workspace",
+        "step": "260"
+    },
+    {
+        "dice_score_val": "0.7068587839603424",
+        "rev": "workspace",
+        "step": "261"
+    },
+    {
+        "dice_score_val": "0.7068587839603424",
+        "rev": "workspace",
+        "step": "262"
+    },
+    {
+        "dice_score_val": "0.7067979723215103",
+        "rev": "workspace",
+        "step": "263"
+    },
+    {
+        "dice_score_val": "0.7067945748567581",
+        "rev": "workspace",
+        "step": "264"
+    },
+    {
+        "dice_score_val": "0.706676110625267",
+        "rev": "workspace",
+        "step": "265"
+    },
+    {
+        "dice_score_val": "0.7065575569868088",
+        "rev": "workspace",
+        "step": "266"
+    },
+    {
+        "dice_score_val": "0.7065575569868088",
+        "rev": "workspace",
+        "step": "267"
+    },
+    {
+        "dice_score_val": "0.7064427137374878",
+        "rev": "workspace",
+        "step": "268"
+    },
+    {
+        "dice_score_val": "0.7063853442668915",
+        "rev": "workspace",
+        "step": "269"
+    },
+    {
+        "dice_score_val": "0.7064427137374878",
+        "rev": "workspace",
+        "step": "270"
+    },
+    {
+        "dice_score_val": "0.7064427137374878",
+        "rev": "workspace",
+        "step": "271"
+    },
+    {
+        "dice_score_val": "0.7064427137374878",
+        "rev": "workspace",
+        "step": "272"
+    },
+    {
+        "dice_score_val": "0.7064427137374878",
+        "rev": "workspace",
+        "step": "273"
+    },
+    {
+        "dice_score_val": "0.706324115395546",
+        "rev": "workspace",
+        "step": "274"
+    },
+    {
+        "dice_score_val": "0.706324115395546",
+        "rev": "workspace",
+        "step": "275"
+    },
+    {
+        "dice_score_val": "0.706324115395546",
+        "rev": "workspace",
+        "step": "276"
+    },
+    {
+        "dice_score_val": "0.7062054425477982",
+        "rev": "workspace",
+        "step": "277"
+    },
+    {
+        "dice_score_val": "0.7062054425477982",
+        "rev": "workspace",
+        "step": "278"
+    },
+    {
+        "dice_score_val": "0.7062628120183945",
+        "rev": "workspace",
+        "step": "279"
+    },
+    {
+        "dice_score_val": "0.7063202112913132",
+        "rev": "workspace",
+        "step": "280"
+    },
+    {
+        "dice_score_val": "0.7063202112913132",
+        "rev": "workspace",
+        "step": "281"
+    },
+    {
+        "dice_score_val": "0.7064351439476013",
+        "rev": "workspace",
+        "step": "282"
+    },
+    {
+        "dice_score_val": "0.7064351439476013",
+        "rev": "workspace",
+        "step": "283"
+    },
+    {
+        "dice_score_val": "0.7066078335046768",
+        "rev": "workspace",
+        "step": "284"
+    },
+    {
+        "dice_score_val": "0.7066078335046768",
+        "rev": "workspace",
+        "step": "285"
+    },
+    {
+        "dice_score_val": "0.7036082744598389",
+        "rev": "workspace",
+        "step": "286"
+    },
+    {
+        "dice_score_val": "0.7051543444395065",
+        "rev": "workspace",
+        "step": "287"
+    },
+    {
+        "dice_score_val": "0.7052731662988663",
+        "rev": "workspace",
+        "step": "288"
+    },
+    {
+        "dice_score_val": "0.7052731662988663",
+        "rev": "workspace",
+        "step": "289"
+    },
+    {
+        "dice_score_val": "0.7052731662988663",
+        "rev": "workspace",
+        "step": "290"
+    },
+    {
+        "dice_score_val": "0.7052731662988663",
+        "rev": "workspace",
+        "step": "291"
+    },
+    {
+        "dice_score_val": "0.7052731662988663",
+        "rev": "workspace",
+        "step": "292"
+    },
+    {
+        "dice_score_val": "0.7052731662988663",
+        "rev": "workspace",
+        "step": "293"
+    },
+    {
+        "dice_score_val": "0.7053308337926865",
+        "rev": "workspace",
+        "step": "294"
+    },
+    {
+        "dice_score_val": "0.7053308337926865",
+        "rev": "workspace",
+        "step": "295"
+    },
+    {
+        "dice_score_val": "0.7053308337926865",
+        "rev": "workspace",
+        "step": "296"
+    },
+    {
+        "dice_score_val": "0.7053885459899902",
+        "rev": "workspace",
+        "step": "297"
+    },
+    {
+        "dice_score_val": "0.7054495960474014",
+        "rev": "workspace",
+        "step": "298"
+    },
+    {
+        "dice_score_val": "0.7049643099308014",
+        "rev": "workspace",
+        "step": "299"
+    }
+]
+    },
+    "title": "",
+    "width": 300,
+    "height": 300,
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "step",
+                    "type": "quantitative",
+                    "title": "step"
+                },
+                "y": {
+                    "field": "dice_score_val",
+                    "type": "quantitative",
+                    "title": "dice_score_val",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                },
+                "tooltip": [
+                    {
+                        "field": "step",
+                        "type": "quantitative"
+                    },
+                    {
+                        "field": "dice_score_val",
+                        "type": "quantitative"
+                    },
+                    {
+                        "field": "rev",
+                        "type": "nominal"
+                    }
+                ]
+            },
+            "layer": [
+                {
+                    "mark": "line"
+                },
+                {
+                    "transform": [
+                        {
+                            "filter": {
+                                "param": "hover",
+                                "empty": false
+                            }
+                        }
+                    ],
+                    "mark": "circle"
+                },
+                {
+                    "mark": "rule",
+                    "params": [
+                        {
+                            "name": "hover",
+                            "select": {
+                                "type": "point",
+                                "on": "mouseover",
+                                "nearest": true
+                            }
+                        }
+                    ],
+                    "encoding": {
+                        "color": {
+                            "condition": {
+                                "param": "hover",
+                                "empty": false,
+                                "value": "1"
+                            },
+                            "value": "transparent"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+;
+            vegaEmbed('#static_dice_score_val', spec);
+        </script>
+    </div>
+    
+
+    <div id = "static_iou_test">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "values": [
+    {
+        "iou_test": "0.3953536060705249",
+        "rev": "workspace",
+        "step": "300"
+    }
+]
+    },
+    "title": "",
+    "width": 300,
+    "height": 300,
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "step",
+                    "type": "quantitative",
+                    "title": "step"
+                },
+                "y": {
+                    "field": "iou_test",
+                    "type": "quantitative",
+                    "title": "iou_test",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                },
+                "tooltip": [
+                    {
+                        "field": "step",
+                        "type": "quantitative"
+                    },
+                    {
+                        "field": "iou_test",
+                        "type": "quantitative"
+                    },
+                    {
+                        "field": "rev",
+                        "type": "nominal"
+                    }
+                ]
+            },
+            "layer": [
+                {
+                    "mark": "line"
+                },
+                {
+                    "transform": [
+                        {
+                            "filter": {
+                                "param": "hover",
+                                "empty": false
+                            }
+                        }
+                    ],
+                    "mark": "circle"
+                },
+                {
+                    "mark": "rule",
+                    "params": [
+                        {
+                            "name": "hover",
+                            "select": {
+                                "type": "point",
+                                "on": "mouseover",
+                                "nearest": true
+                            }
+                        }
+                    ],
+                    "encoding": {
+                        "color": {
+                            "condition": {
+                                "param": "hover",
+                                "empty": false,
+                                "value": "1"
+                            },
+                            "value": "transparent"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+;
+            vegaEmbed('#static_iou_test', spec);
+        </script>
+    </div>
+    
+
+    <div id = "static_iou_val">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "values": [
+    {
+        "iou_val": "0.13412155490368605",
+        "rev": "workspace",
+        "step": "0"
+    },
+    {
+        "iou_val": "0.18458542972803116",
+        "rev": "workspace",
+        "step": "1"
+    },
+    {
+        "iou_val": "0.2612214367836714",
+        "rev": "workspace",
+        "step": "2"
+    },
+    {
+        "iou_val": "0.3230152390897274",
+        "rev": "workspace",
+        "step": "3"
+    },
+    {
+        "iou_val": "0.3575871102511883",
+        "rev": "workspace",
+        "step": "4"
+    },
+    {
+        "iou_val": "0.37744829058647156",
+        "rev": "workspace",
+        "step": "5"
+    },
+    {
+        "iou_val": "0.3891996294260025",
+        "rev": "workspace",
+        "step": "6"
+    },
+    {
+        "iou_val": "0.3984528034925461",
+        "rev": "workspace",
+        "step": "7"
+    },
+    {
+        "iou_val": "0.40759744495153427",
+        "rev": "workspace",
+        "step": "8"
+    },
+    {
+        "iou_val": "0.4145323783159256",
+        "rev": "workspace",
+        "step": "9"
+    },
+    {
+        "iou_val": "0.41748008131980896",
+        "rev": "workspace",
+        "step": "10"
+    },
+    {
+        "iou_val": "0.4218848794698715",
+        "rev": "workspace",
+        "step": "11"
+    },
+    {
+        "iou_val": "0.42518673837184906",
+        "rev": "workspace",
+        "step": "12"
+    },
+    {
+        "iou_val": "0.42773445695638657",
+        "rev": "workspace",
+        "step": "13"
+    },
+    {
+        "iou_val": "0.43701086938381195",
+        "rev": "workspace",
+        "step": "14"
+    },
+    {
+        "iou_val": "0.4419838562607765",
+        "rev": "workspace",
+        "step": "15"
+    },
+    {
+        "iou_val": "0.44518163055181503",
+        "rev": "workspace",
+        "step": "16"
+    },
+    {
+        "iou_val": "0.4499247968196869",
+        "rev": "workspace",
+        "step": "17"
+    },
+    {
+        "iou_val": "0.45445891469717026",
+        "rev": "workspace",
+        "step": "18"
+    },
+    {
+        "iou_val": "0.45752374082803726",
+        "rev": "workspace",
+        "step": "19"
+    },
+    {
+        "iou_val": "0.46167438477277756",
+        "rev": "workspace",
+        "step": "20"
+    },
+    {
+        "iou_val": "0.46551282703876495",
+        "rev": "workspace",
+        "step": "21"
+    },
+    {
+        "iou_val": "0.4656987488269806",
+        "rev": "workspace",
+        "step": "22"
+    },
+    {
+        "iou_val": "0.4664684534072876",
+        "rev": "workspace",
+        "step": "23"
+    },
+    {
+        "iou_val": "0.4683774933218956",
+        "rev": "workspace",
+        "step": "24"
+    },
+    {
+        "iou_val": "0.47044794261455536",
+        "rev": "workspace",
+        "step": "25"
+    },
+    {
+        "iou_val": "0.47221789509058",
+        "rev": "workspace",
+        "step": "26"
+    },
+    {
+        "iou_val": "0.4782140403985977",
+        "rev": "workspace",
+        "step": "27"
+    },
+    {
+        "iou_val": "0.48326022177934647",
+        "rev": "workspace",
+        "step": "28"
+    },
+    {
+        "iou_val": "0.4838196709752083",
+        "rev": "workspace",
+        "step": "29"
+    },
+    {
+        "iou_val": "0.4848678559064865",
+        "rev": "workspace",
+        "step": "30"
+    },
+    {
+        "iou_val": "0.486347921192646",
+        "rev": "workspace",
+        "step": "31"
+    },
+    {
+        "iou_val": "0.4886798933148384",
+        "rev": "workspace",
+        "step": "32"
+    },
+    {
+        "iou_val": "0.49039993435144424",
+        "rev": "workspace",
+        "step": "33"
+    },
+    {
+        "iou_val": "0.4912887066602707",
+        "rev": "workspace",
+        "step": "34"
+    },
+    {
+        "iou_val": "0.49135980010032654",
+        "rev": "workspace",
+        "step": "35"
+    },
+    {
+        "iou_val": "0.4925191029906273",
+        "rev": "workspace",
+        "step": "36"
+    },
+    {
+        "iou_val": "0.4937714636325836",
+        "rev": "workspace",
+        "step": "37"
+    },
+    {
+        "iou_val": "0.49433547258377075",
+        "rev": "workspace",
+        "step": "38"
+    },
+    {
+        "iou_val": "0.49603020399808884",
+        "rev": "workspace",
+        "step": "39"
+    },
+    {
+        "iou_val": "0.49663274735212326",
+        "rev": "workspace",
+        "step": "40"
+    },
+    {
+        "iou_val": "0.49809306114912033",
+        "rev": "workspace",
+        "step": "41"
+    },
+    {
+        "iou_val": "0.4983472526073456",
+        "rev": "workspace",
+        "step": "42"
+    },
+    {
+        "iou_val": "0.49860145151615143",
+        "rev": "workspace",
+        "step": "43"
+    },
+    {
+        "iou_val": "0.499039888381958",
+        "rev": "workspace",
+        "step": "44"
+    },
+    {
+        "iou_val": "0.49922432005405426",
+        "rev": "workspace",
+        "step": "45"
+    },
+    {
+        "iou_val": "0.49926062673330307",
+        "rev": "workspace",
+        "step": "46"
+    },
+    {
+        "iou_val": "0.4993182122707367",
+        "rev": "workspace",
+        "step": "47"
+    },
+    {
+        "iou_val": "0.49994228035211563",
+        "rev": "workspace",
+        "step": "48"
+    },
+    {
+        "iou_val": "0.49943286180496216",
+        "rev": "workspace",
+        "step": "49"
+    },
+    {
+        "iou_val": "0.4994106888771057",
+        "rev": "workspace",
+        "step": "50"
+    },
+    {
+        "iou_val": "0.4994679242372513",
+        "rev": "workspace",
+        "step": "51"
+    },
+    {
+        "iou_val": "0.5011467784643173",
+        "rev": "workspace",
+        "step": "52"
+    },
+    {
+        "iou_val": "0.5023524984717369",
+        "rev": "workspace",
+        "step": "53"
+    },
+    {
+        "iou_val": "0.5026074722409248",
+        "rev": "workspace",
+        "step": "54"
+    },
+    {
+        "iou_val": "0.5027349591255188",
+        "rev": "workspace",
+        "step": "55"
+    },
+    {
+        "iou_val": "0.5028032511472702",
+        "rev": "workspace",
+        "step": "56"
+    },
+    {
+        "iou_val": "0.5028032511472702",
+        "rev": "workspace",
+        "step": "57"
+    },
+    {
+        "iou_val": "0.5031086355447769",
+        "rev": "workspace",
+        "step": "58"
+    },
+    {
+        "iou_val": "0.5031086355447769",
+        "rev": "workspace",
+        "step": "59"
+    },
+    {
+        "iou_val": "0.5041111186146736",
+        "rev": "workspace",
+        "step": "60"
+    },
+    {
+        "iou_val": "0.5041194036602974",
+        "rev": "workspace",
+        "step": "61"
+    },
+    {
+        "iou_val": "0.5041194036602974",
+        "rev": "workspace",
+        "step": "62"
+    },
+    {
+        "iou_val": "0.5045699700713158",
+        "rev": "workspace",
+        "step": "63"
+    },
+    {
+        "iou_val": "0.5055240243673325",
+        "rev": "workspace",
+        "step": "64"
+    },
+    {
+        "iou_val": "0.5056515112519264",
+        "rev": "workspace",
+        "step": "65"
+    },
+    {
+        "iou_val": "0.5056515112519264",
+        "rev": "workspace",
+        "step": "66"
+    },
+    {
+        "iou_val": "0.5054713860154152",
+        "rev": "workspace",
+        "step": "67"
+    },
+    {
+        "iou_val": "0.5049748048186302",
+        "rev": "workspace",
+        "step": "68"
+    },
+    {
+        "iou_val": "0.5051691383123398",
+        "rev": "workspace",
+        "step": "69"
+    },
+    {
+        "iou_val": "0.5049895271658897",
+        "rev": "workspace",
+        "step": "70"
+    },
+    {
+        "iou_val": "0.5051164254546165",
+        "rev": "workspace",
+        "step": "71"
+    },
+    {
+        "iou_val": "0.505243331193924",
+        "rev": "workspace",
+        "step": "72"
+    },
+    {
+        "iou_val": "0.5053032711148262",
+        "rev": "workspace",
+        "step": "73"
+    },
+    {
+        "iou_val": "0.5053032711148262",
+        "rev": "workspace",
+        "step": "74"
+    },
+    {
+        "iou_val": "0.5061881318688393",
+        "rev": "workspace",
+        "step": "75"
+    },
+    {
+        "iou_val": "0.5063150972127914",
+        "rev": "workspace",
+        "step": "76"
+    },
+    {
+        "iou_val": "0.5062549039721489",
+        "rev": "workspace",
+        "step": "77"
+    },
+    {
+        "iou_val": "0.5084773004055023",
+        "rev": "workspace",
+        "step": "78"
+    },
+    {
+        "iou_val": "0.5098106414079666",
+        "rev": "workspace",
+        "step": "79"
+    },
+    {
+        "iou_val": "0.5096836760640144",
+        "rev": "workspace",
+        "step": "80"
+    },
+    {
+        "iou_val": "0.5102514922618866",
+        "rev": "workspace",
+        "step": "81"
+    },
+    {
+        "iou_val": "0.5100575536489487",
+        "rev": "workspace",
+        "step": "82"
+    },
+    {
+        "iou_val": "0.5110509395599365",
+        "rev": "workspace",
+        "step": "83"
+    },
+    {
+        "iou_val": "0.5135893225669861",
+        "rev": "workspace",
+        "step": "84"
+    },
+    {
+        "iou_val": "0.514104425907135",
+        "rev": "workspace",
+        "step": "85"
+    },
+    {
+        "iou_val": "0.5146835297346115",
+        "rev": "workspace",
+        "step": "86"
+    },
+    {
+        "iou_val": "0.5146835297346115",
+        "rev": "workspace",
+        "step": "87"
+    },
+    {
+        "iou_val": "0.5153872072696686",
+        "rev": "workspace",
+        "step": "88"
+    },
+    {
+        "iou_val": "0.5150449201464653",
+        "rev": "workspace",
+        "step": "89"
+    },
+    {
+        "iou_val": "0.5149241164326668",
+        "rev": "workspace",
+        "step": "90"
+    },
+    {
+        "iou_val": "0.5151787027716637",
+        "rev": "workspace",
+        "step": "91"
+    },
+    {
+        "iou_val": "0.5153059884905815",
+        "rev": "workspace",
+        "step": "92"
+    },
+    {
+        "iou_val": "0.51543328166008",
+        "rev": "workspace",
+        "step": "93"
+    },
+    {
+        "iou_val": "0.5163365453481674",
+        "rev": "workspace",
+        "step": "94"
+    },
+    {
+        "iou_val": "0.5165249183773994",
+        "rev": "workspace",
+        "step": "95"
+    },
+    {
+        "iou_val": "0.5167134776711464",
+        "rev": "workspace",
+        "step": "96"
+    },
+    {
+        "iou_val": "0.5185737609863281",
+        "rev": "workspace",
+        "step": "97"
+    },
+    {
+        "iou_val": "0.5185125544667244",
+        "rev": "workspace",
+        "step": "98"
+    },
+    {
+        "iou_val": "0.5196079611778259",
+        "rev": "workspace",
+        "step": "99"
+    },
+    {
+        "iou_val": "0.5208210274577141",
+        "rev": "workspace",
+        "step": "100"
+    },
+    {
+        "iou_val": "0.5209487080574036",
+        "rev": "workspace",
+        "step": "101"
+    },
+    {
+        "iou_val": "0.5219970643520355",
+        "rev": "workspace",
+        "step": "102"
+    },
+    {
+        "iou_val": "0.5228039100766182",
+        "rev": "workspace",
+        "step": "103"
+    },
+    {
+        "iou_val": "0.5237390547990799",
+        "rev": "workspace",
+        "step": "104"
+    },
+    {
+        "iou_val": "0.5264448076486588",
+        "rev": "workspace",
+        "step": "105"
+    },
+    {
+        "iou_val": "0.5267450138926506",
+        "rev": "workspace",
+        "step": "106"
+    },
+    {
+        "iou_val": "0.5268679857254028",
+        "rev": "workspace",
+        "step": "107"
+    },
+    {
+        "iou_val": "0.5294274762272835",
+        "rev": "workspace",
+        "step": "108"
+    },
+    {
+        "iou_val": "0.5294891223311424",
+        "rev": "workspace",
+        "step": "109"
+    },
+    {
+        "iou_val": "0.5294891223311424",
+        "rev": "workspace",
+        "step": "110"
+    },
+    {
+        "iou_val": "0.5306901931762695",
+        "rev": "workspace",
+        "step": "111"
+    },
+    {
+        "iou_val": "0.530685655772686",
+        "rev": "workspace",
+        "step": "112"
+    },
+    {
+        "iou_val": "0.5318893268704414",
+        "rev": "workspace",
+        "step": "113"
+    },
+    {
+        "iou_val": "0.5326529815793037",
+        "rev": "workspace",
+        "step": "114"
+    },
+    {
+        "iou_val": "0.5327773466706276",
+        "rev": "workspace",
+        "step": "115"
+    },
+    {
+        "iou_val": "0.5327773466706276",
+        "rev": "workspace",
+        "step": "116"
+    },
+    {
+        "iou_val": "0.5328396260738373",
+        "rev": "workspace",
+        "step": "117"
+    },
+    {
+        "iou_val": "0.5326486825942993",
+        "rev": "workspace",
+        "step": "118"
+    },
+    {
+        "iou_val": "0.5320045799016953",
+        "rev": "workspace",
+        "step": "119"
+    },
+    {
+        "iou_val": "0.5313648879528046",
+        "rev": "workspace",
+        "step": "120"
+    },
+    {
+        "iou_val": "0.5313648879528046",
+        "rev": "workspace",
+        "step": "121"
+    },
+    {
+        "iou_val": "0.53193798661232",
+        "rev": "workspace",
+        "step": "122"
+    },
+    {
+        "iou_val": "0.5318091884255409",
+        "rev": "workspace",
+        "step": "123"
+    },
+    {
+        "iou_val": "0.5316850990056992",
+        "rev": "workspace",
+        "step": "124"
+    },
+    {
+        "iou_val": "0.5316850990056992",
+        "rev": "workspace",
+        "step": "125"
+    },
+    {
+        "iou_val": "0.5318713337182999",
+        "rev": "workspace",
+        "step": "126"
+    },
+    {
+        "iou_val": "0.5318713337182999",
+        "rev": "workspace",
+        "step": "127"
+    },
+    {
+        "iou_val": "0.5315515920519829",
+        "rev": "workspace",
+        "step": "128"
+    },
+    {
+        "iou_val": "0.5315515920519829",
+        "rev": "workspace",
+        "step": "129"
+    },
+    {
+        "iou_val": "0.5326442494988441",
+        "rev": "workspace",
+        "step": "130"
+    },
+    {
+        "iou_val": "0.5325154438614845",
+        "rev": "workspace",
+        "step": "131"
+    },
+    {
+        "iou_val": "0.5325154438614845",
+        "rev": "workspace",
+        "step": "132"
+    },
+    {
+        "iou_val": "0.5325154438614845",
+        "rev": "workspace",
+        "step": "133"
+    },
+    {
+        "iou_val": "0.5325773879885674",
+        "rev": "workspace",
+        "step": "134"
+    },
+    {
+        "iou_val": "0.5325773879885674",
+        "rev": "workspace",
+        "step": "135"
+    },
+    {
+        "iou_val": "0.5327014699578285",
+        "rev": "workspace",
+        "step": "136"
+    },
+    {
+        "iou_val": "0.5330830588936806",
+        "rev": "workspace",
+        "step": "137"
+    },
+    {
+        "iou_val": "0.5335981026291847",
+        "rev": "workspace",
+        "step": "138"
+    },
+    {
+        "iou_val": "0.534308984875679",
+        "rev": "workspace",
+        "step": "139"
+    },
+    {
+        "iou_val": "0.5333869233727455",
+        "rev": "workspace",
+        "step": "140"
+    },
+    {
+        "iou_val": "0.5345524027943611",
+        "rev": "workspace",
+        "step": "141"
+    },
+    {
+        "iou_val": "0.5346147865056992",
+        "rev": "workspace",
+        "step": "142"
+    },
+    {
+        "iou_val": "0.5344851836562157",
+        "rev": "workspace",
+        "step": "143"
+    },
+    {
+        "iou_val": "0.5343555882573128",
+        "rev": "workspace",
+        "step": "144"
+    },
+    {
+        "iou_val": "0.5343555882573128",
+        "rev": "workspace",
+        "step": "145"
+    },
+    {
+        "iou_val": "0.5342311561107635",
+        "rev": "workspace",
+        "step": "146"
+    },
+    {
+        "iou_val": "0.5343606173992157",
+        "rev": "workspace",
+        "step": "147"
+    },
+    {
+        "iou_val": "0.5338449999690056",
+        "rev": "workspace",
+        "step": "148"
+    },
+    {
+        "iou_val": "0.5337828099727631",
+        "rev": "workspace",
+        "step": "149"
+    },
+    {
+        "iou_val": "0.5333338603377342",
+        "rev": "workspace",
+        "step": "150"
+    },
+    {
+        "iou_val": "0.5334009379148483",
+        "rev": "workspace",
+        "step": "151"
+    },
+    {
+        "iou_val": "0.533659465610981",
+        "rev": "workspace",
+        "step": "152"
+    },
+    {
+        "iou_val": "0.5335971415042877",
+        "rev": "workspace",
+        "step": "153"
+    },
+    {
+        "iou_val": "0.5338555350899696",
+        "rev": "workspace",
+        "step": "154"
+    },
+    {
+        "iou_val": "0.5337931364774704",
+        "rev": "workspace",
+        "step": "155"
+    },
+    {
+        "iou_val": "0.5343714207410812",
+        "rev": "workspace",
+        "step": "156"
+    },
+    {
+        "iou_val": "0.5343714207410812",
+        "rev": "workspace",
+        "step": "157"
+    },
+    {
+        "iou_val": "0.5344338193535805",
+        "rev": "workspace",
+        "step": "158"
+    },
+    {
+        "iou_val": "0.5344338193535805",
+        "rev": "workspace",
+        "step": "159"
+    },
+    {
+        "iou_val": "0.5370138585567474",
+        "rev": "workspace",
+        "step": "160"
+    },
+    {
+        "iou_val": "0.538461223244667",
+        "rev": "workspace",
+        "step": "161"
+    },
+    {
+        "iou_val": "0.5390533208847046",
+        "rev": "workspace",
+        "step": "162"
+    },
+    {
+        "iou_val": "0.5391157865524292",
+        "rev": "workspace",
+        "step": "163"
+    },
+    {
+        "iou_val": "0.5404273122549057",
+        "rev": "workspace",
+        "step": "164"
+    },
+    {
+        "iou_val": "0.5404273122549057",
+        "rev": "workspace",
+        "step": "165"
+    },
+    {
+        "iou_val": "0.5404273122549057",
+        "rev": "workspace",
+        "step": "166"
+    },
+    {
+        "iou_val": "0.5404273122549057",
+        "rev": "workspace",
+        "step": "167"
+    },
+    {
+        "iou_val": "0.5404273122549057",
+        "rev": "workspace",
+        "step": "168"
+    },
+    {
+        "iou_val": "0.5404273122549057",
+        "rev": "workspace",
+        "step": "169"
+    },
+    {
+        "iou_val": "0.5404273122549057",
+        "rev": "workspace",
+        "step": "170"
+    },
+    {
+        "iou_val": "0.5399686321616173",
+        "rev": "workspace",
+        "step": "171"
+    },
+    {
+        "iou_val": "0.5393811985850334",
+        "rev": "workspace",
+        "step": "172"
+    },
+    {
+        "iou_val": "0.5394478067755699",
+        "rev": "workspace",
+        "step": "173"
+    },
+    {
+        "iou_val": "0.5394478067755699",
+        "rev": "workspace",
+        "step": "174"
+    },
+    {
+        "iou_val": "0.5395770743489265",
+        "rev": "workspace",
+        "step": "175"
+    },
+    {
+        "iou_val": "0.5394516810774803",
+        "rev": "workspace",
+        "step": "176"
+    },
+    {
+        "iou_val": "0.539389081299305",
+        "rev": "workspace",
+        "step": "177"
+    },
+    {
+        "iou_val": "0.53913514316082",
+        "rev": "workspace",
+        "step": "178"
+    },
+    {
+        "iou_val": "0.53913514316082",
+        "rev": "workspace",
+        "step": "179"
+    },
+    {
+        "iou_val": "0.5393305346369743",
+        "rev": "workspace",
+        "step": "180"
+    },
+    {
+        "iou_val": "0.5385565012693405",
+        "rev": "workspace",
+        "step": "181"
+    },
+    {
+        "iou_val": "0.5385565012693405",
+        "rev": "workspace",
+        "step": "182"
+    },
+    {
+        "iou_val": "0.5384942218661308",
+        "rev": "workspace",
+        "step": "183"
+    },
+    {
+        "iou_val": "0.5396340414881706",
+        "rev": "workspace",
+        "step": "184"
+    },
+    {
+        "iou_val": "0.5401497706770897",
+        "rev": "workspace",
+        "step": "185"
+    },
+    {
+        "iou_val": "0.5401497706770897",
+        "rev": "workspace",
+        "step": "186"
+    },
+    {
+        "iou_val": "0.5401497706770897",
+        "rev": "workspace",
+        "step": "187"
+    },
+    {
+        "iou_val": "0.5402742624282837",
+        "rev": "workspace",
+        "step": "188"
+    },
+    {
+        "iou_val": "0.5403366014361382",
+        "rev": "workspace",
+        "step": "189"
+    },
+    {
+        "iou_val": "0.5403366014361382",
+        "rev": "workspace",
+        "step": "190"
+    },
+    {
+        "iou_val": "0.5410437509417534",
+        "rev": "workspace",
+        "step": "191"
+    },
+    {
+        "iou_val": "0.5411062240600586",
+        "rev": "workspace",
+        "step": "192"
+    },
+    {
+        "iou_val": "0.5411062240600586",
+        "rev": "workspace",
+        "step": "193"
+    },
+    {
+        "iou_val": "0.541685126721859",
+        "rev": "workspace",
+        "step": "194"
+    },
+    {
+        "iou_val": "0.5431010723114014",
+        "rev": "workspace",
+        "step": "195"
+    },
+    {
+        "iou_val": "0.5437511652708054",
+        "rev": "workspace",
+        "step": "196"
+    },
+    {
+        "iou_val": "0.5437511652708054",
+        "rev": "workspace",
+        "step": "197"
+    },
+    {
+        "iou_val": "0.5437511652708054",
+        "rev": "workspace",
+        "step": "198"
+    },
+    {
+        "iou_val": "0.5437511652708054",
+        "rev": "workspace",
+        "step": "199"
+    },
+    {
+        "iou_val": "0.5437511652708054",
+        "rev": "workspace",
+        "step": "200"
+    },
+    {
+        "iou_val": "0.5437511652708054",
+        "rev": "workspace",
+        "step": "201"
+    },
+    {
+        "iou_val": "0.5438138917088509",
+        "rev": "workspace",
+        "step": "202"
+    },
+    {
+        "iou_val": "0.5438138917088509",
+        "rev": "workspace",
+        "step": "203"
+    },
+    {
+        "iou_val": "0.5438138917088509",
+        "rev": "workspace",
+        "step": "204"
+    },
+    {
+        "iou_val": "0.5438138917088509",
+        "rev": "workspace",
+        "step": "205"
+    },
+    {
+        "iou_val": "0.5438138917088509",
+        "rev": "workspace",
+        "step": "206"
+    },
+    {
+        "iou_val": "0.5428257510066032",
+        "rev": "workspace",
+        "step": "207"
+    },
+    {
+        "iou_val": "0.5428257510066032",
+        "rev": "workspace",
+        "step": "208"
+    },
+    {
+        "iou_val": "0.5428257510066032",
+        "rev": "workspace",
+        "step": "209"
+    },
+    {
+        "iou_val": "0.5428257510066032",
+        "rev": "workspace",
+        "step": "210"
+    },
+    {
+        "iou_val": "0.5428257510066032",
+        "rev": "workspace",
+        "step": "211"
+    },
+    {
+        "iou_val": "0.5434139296412468",
+        "rev": "workspace",
+        "step": "212"
+    },
+    {
+        "iou_val": "0.5434139296412468",
+        "rev": "workspace",
+        "step": "213"
+    },
+    {
+        "iou_val": "0.5455968081951141",
+        "rev": "workspace",
+        "step": "214"
+    },
+    {
+        "iou_val": "0.5487802922725677",
+        "rev": "workspace",
+        "step": "215"
+    },
+    {
+        "iou_val": "0.5499532669782639",
+        "rev": "workspace",
+        "step": "216"
+    },
+    {
+        "iou_val": "0.5513357520103455",
+        "rev": "workspace",
+        "step": "217"
+    },
+    {
+        "iou_val": "0.5525357723236084",
+        "rev": "workspace",
+        "step": "218"
+    },
+    {
+        "iou_val": "0.5531430393457413",
+        "rev": "workspace",
+        "step": "219"
+    },
+    {
+        "iou_val": "0.5531430393457413",
+        "rev": "workspace",
+        "step": "220"
+    },
+    {
+        "iou_val": "0.5532690733671188",
+        "rev": "workspace",
+        "step": "221"
+    },
+    {
+        "iou_val": "0.5546063333749771",
+        "rev": "workspace",
+        "step": "222"
+    },
+    {
+        "iou_val": "0.5547327697277069",
+        "rev": "workspace",
+        "step": "223"
+    },
+    {
+        "iou_val": "0.5552151501178741",
+        "rev": "workspace",
+        "step": "224"
+    },
+    {
+        "iou_val": "0.555278405547142",
+        "rev": "workspace",
+        "step": "225"
+    },
+    {
+        "iou_val": "0.555148534476757",
+        "rev": "workspace",
+        "step": "226"
+    },
+    {
+        "iou_val": "0.5552083998918533",
+        "rev": "workspace",
+        "step": "227"
+    },
+    {
+        "iou_val": "0.547087237238884",
+        "rev": "workspace",
+        "step": "228"
+    },
+    {
+        "iou_val": "0.547083780169487",
+        "rev": "workspace",
+        "step": "229"
+    },
+    {
+        "iou_val": "0.5472107231616974",
+        "rev": "workspace",
+        "step": "230"
+    },
+    {
+        "iou_val": "0.5458551421761513",
+        "rev": "workspace",
+        "step": "231"
+    },
+    {
+        "iou_val": "0.5466035902500153",
+        "rev": "workspace",
+        "step": "232"
+    },
+    {
+        "iou_val": "0.5466002598404884",
+        "rev": "workspace",
+        "step": "233"
+    },
+    {
+        "iou_val": "0.5466638952493668",
+        "rev": "workspace",
+        "step": "234"
+    },
+    {
+        "iou_val": "0.5500582382082939",
+        "rev": "workspace",
+        "step": "235"
+    },
+    {
+        "iou_val": "0.5500582382082939",
+        "rev": "workspace",
+        "step": "236"
+    },
+    {
+        "iou_val": "0.5499276220798492",
+        "rev": "workspace",
+        "step": "237"
+    },
+    {
+        "iou_val": "0.5497970059514046",
+        "rev": "workspace",
+        "step": "238"
+    },
+    {
+        "iou_val": "0.5491738840937614",
+        "rev": "workspace",
+        "step": "239"
+    },
+    {
+        "iou_val": "0.5491103827953339",
+        "rev": "workspace",
+        "step": "240"
+    },
+    {
+        "iou_val": "0.5490469485521317",
+        "rev": "workspace",
+        "step": "241"
+    },
+    {
+        "iou_val": "0.5489835813641548",
+        "rev": "workspace",
+        "step": "242"
+    },
+    {
+        "iou_val": "0.5489202737808228",
+        "rev": "workspace",
+        "step": "243"
+    },
+    {
+        "iou_val": "0.5489202737808228",
+        "rev": "workspace",
+        "step": "244"
+    },
+    {
+        "iou_val": "0.5489202737808228",
+        "rev": "workspace",
+        "step": "245"
+    },
+    {
+        "iou_val": "0.5503944903612137",
+        "rev": "workspace",
+        "step": "246"
+    },
+    {
+        "iou_val": "0.5503944903612137",
+        "rev": "workspace",
+        "step": "247"
+    },
+    {
+        "iou_val": "0.5503944903612137",
+        "rev": "workspace",
+        "step": "248"
+    },
+    {
+        "iou_val": "0.5503944903612137",
+        "rev": "workspace",
+        "step": "249"
+    },
+    {
+        "iou_val": "0.5510176122188568",
+        "rev": "workspace",
+        "step": "250"
+    },
+    {
+        "iou_val": "0.5510176122188568",
+        "rev": "workspace",
+        "step": "251"
+    },
+    {
+        "iou_val": "0.5491657555103302",
+        "rev": "workspace",
+        "step": "252"
+    },
+    {
+        "iou_val": "0.5491657555103302",
+        "rev": "workspace",
+        "step": "253"
+    },
+    {
+        "iou_val": "0.5492289885878563",
+        "rev": "workspace",
+        "step": "254"
+    },
+    {
+        "iou_val": "0.5492289885878563",
+        "rev": "workspace",
+        "step": "255"
+    },
+    {
+        "iou_val": "0.5492922887206078",
+        "rev": "workspace",
+        "step": "256"
+    },
+    {
+        "iou_val": "0.5493556559085846",
+        "rev": "workspace",
+        "step": "257"
+    },
+    {
+        "iou_val": "0.5493556559085846",
+        "rev": "workspace",
+        "step": "258"
+    },
+    {
+        "iou_val": "0.5506389141082764",
+        "rev": "workspace",
+        "step": "259"
+    },
+    {
+        "iou_val": "0.5514727830886841",
+        "rev": "workspace",
+        "step": "260"
+    },
+    {
+        "iou_val": "0.5514727830886841",
+        "rev": "workspace",
+        "step": "261"
+    },
+    {
+        "iou_val": "0.5514727830886841",
+        "rev": "workspace",
+        "step": "262"
+    },
+    {
+        "iou_val": "0.551405668258667",
+        "rev": "workspace",
+        "step": "263"
+    },
+    {
+        "iou_val": "0.5514019131660461",
+        "rev": "workspace",
+        "step": "264"
+    },
+    {
+        "iou_val": "0.5512712299823761",
+        "rev": "workspace",
+        "step": "265"
+    },
+    {
+        "iou_val": "0.551140546798706",
+        "rev": "workspace",
+        "step": "266"
+    },
+    {
+        "iou_val": "0.551140546798706",
+        "rev": "workspace",
+        "step": "267"
+    },
+    {
+        "iou_val": "0.5510140210390091",
+        "rev": "workspace",
+        "step": "268"
+    },
+    {
+        "iou_val": "0.550950862467289",
+        "rev": "workspace",
+        "step": "269"
+    },
+    {
+        "iou_val": "0.5510140210390091",
+        "rev": "workspace",
+        "step": "270"
+    },
+    {
+        "iou_val": "0.5510140210390091",
+        "rev": "workspace",
+        "step": "271"
+    },
+    {
+        "iou_val": "0.5510140210390091",
+        "rev": "workspace",
+        "step": "272"
+    },
+    {
+        "iou_val": "0.5510140210390091",
+        "rev": "workspace",
+        "step": "273"
+    },
+    {
+        "iou_val": "0.5508834719657898",
+        "rev": "workspace",
+        "step": "274"
+    },
+    {
+        "iou_val": "0.5508834719657898",
+        "rev": "workspace",
+        "step": "275"
+    },
+    {
+        "iou_val": "0.5508834719657898",
+        "rev": "workspace",
+        "step": "276"
+    },
+    {
+        "iou_val": "0.5507529228925705",
+        "rev": "workspace",
+        "step": "277"
+    },
+    {
+        "iou_val": "0.5507529228925705",
+        "rev": "workspace",
+        "step": "278"
+    },
+    {
+        "iou_val": "0.5508160144090652",
+        "rev": "workspace",
+        "step": "279"
+    },
+    {
+        "iou_val": "0.5508791729807854",
+        "rev": "workspace",
+        "step": "280"
+    },
+    {
+        "iou_val": "0.5508791729807854",
+        "rev": "workspace",
+        "step": "281"
+    },
+    {
+        "iou_val": "0.5510056912899017",
+        "rev": "workspace",
+        "step": "282"
+    },
+    {
+        "iou_val": "0.5510056912899017",
+        "rev": "workspace",
+        "step": "283"
+    },
+    {
+        "iou_val": "0.5511959567666054",
+        "rev": "workspace",
+        "step": "284"
+    },
+    {
+        "iou_val": "0.5511959567666054",
+        "rev": "workspace",
+        "step": "285"
+    },
+    {
+        "iou_val": "0.5482019484043121",
+        "rev": "workspace",
+        "step": "286"
+    },
+    {
+        "iou_val": "0.549800418317318",
+        "rev": "workspace",
+        "step": "287"
+    },
+    {
+        "iou_val": "0.5499314442276955",
+        "rev": "workspace",
+        "step": "288"
+    },
+    {
+        "iou_val": "0.5499314442276955",
+        "rev": "workspace",
+        "step": "289"
+    },
+    {
+        "iou_val": "0.5499314442276955",
+        "rev": "workspace",
+        "step": "290"
+    },
+    {
+        "iou_val": "0.5499314442276955",
+        "rev": "workspace",
+        "step": "291"
+    },
+    {
+        "iou_val": "0.5499314442276955",
+        "rev": "workspace",
+        "step": "292"
+    },
+    {
+        "iou_val": "0.5499314442276955",
+        "rev": "workspace",
+        "step": "293"
+    },
+    {
+        "iou_val": "0.5499950647354126",
+        "rev": "workspace",
+        "step": "294"
+    },
+    {
+        "iou_val": "0.5499950647354126",
+        "rev": "workspace",
+        "step": "295"
+    },
+    {
+        "iou_val": "0.5499950647354126",
+        "rev": "workspace",
+        "step": "296"
+    },
+    {
+        "iou_val": "0.5500587597489357",
+        "rev": "workspace",
+        "step": "297"
+    },
+    {
+        "iou_val": "0.5501261651515961",
+        "rev": "workspace",
+        "step": "298"
+    },
+    {
+        "iou_val": "0.549496978521347",
+        "rev": "workspace",
+        "step": "299"
+    }
+]
+    },
+    "title": "",
+    "width": 300,
+    "height": 300,
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "step",
+                    "type": "quantitative",
+                    "title": "step"
+                },
+                "y": {
+                    "field": "iou_val",
+                    "type": "quantitative",
+                    "title": "iou_val",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                },
+                "tooltip": [
+                    {
+                        "field": "step",
+                        "type": "quantitative"
+                    },
+                    {
+                        "field": "iou_val",
+                        "type": "quantitative"
+                    },
+                    {
+                        "field": "rev",
+                        "type": "nominal"
+                    }
+                ]
+            },
+            "layer": [
+                {
+                    "mark": "line"
+                },
+                {
+                    "transform": [
+                        {
+                            "filter": {
+                                "param": "hover",
+                                "empty": false
+                            }
+                        }
+                    ],
+                    "mark": "circle"
+                },
+                {
+                    "mark": "rule",
+                    "params": [
+                        {
+                            "name": "hover",
+                            "select": {
+                                "type": "point",
+                                "on": "mouseover",
+                                "nearest": true
+                            }
+                        }
+                    ],
+                    "encoding": {
+                        "color": {
+                            "condition": {
+                                "param": "hover",
+                                "empty": false,
+                                "value": "1"
+                            },
+                            "value": "transparent"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+;
+            vegaEmbed('#static_iou_val', spec);
+        </script>
+    </div>
+    
+</body>
+</html>

@@ -4,9 +4,9 @@ momentum: 0.9
 batch_size: 1
 
 seed: 33
-width: 900
+width: 600
 
 threshold: 0.1
 
-current_dataset: "kios"
-model_output: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src\\models\\kios.weights"
+current_dataset: "cbis"
+model_output: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src\\models\\cbis.weights"
