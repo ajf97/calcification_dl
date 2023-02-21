@@ -155,7 +155,7 @@ def run_experiment(cfg: DictConfig) -> None:
 
     with Live(save_dvc_exp=True) as live:
 
-        live.log_param("epochs", epochs)
+        live.log_params(cfg.train)
         best_metric = 0.0
 
         for epoch in range(epochs):  # loop over the dataset multiple times
