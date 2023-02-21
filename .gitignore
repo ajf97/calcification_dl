@@ -5,3 +5,5 @@ notebooks
 .pytest_cache
 logs
 temp
+*.png
+first_experiments

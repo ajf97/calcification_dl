@@ -3,76 +3,39 @@ import re
 
 import cv2
 import numpy as np
-import pydicom
 from torch.utils.data import Dataset
 
+from preprocessing.transforms import preprocess
 
-class CbisDataset(Dataset):
-    def __init__(
-        self, img_dir: str, transform=None, out_dir=None, target_transform=None
-    ):
+
+class CBISDataset(Dataset):
+    def __init__(self, img_dir: str, mask_dir: str, transform=False, width=300):
         self.img_dir = img_dir
+        self.mask_dir = mask_dir
         self.transform = transform
-        self.target_transform = target_transform
-        self.out_dir = out_dir
+        self.width = width
 
     def __len__(self):
         files_list = os.listdir(self.img_dir)
-        full_mammograms = filter(lambda file: "FULL" in file, files_list)
-        return len(list(full_mammograms))
+        return len(list(files_list))
 
     def __getitem__(self, idx):
-        file_list = os.listdir(self.img_dir)
-        full_mammograms = list(filter(lambda file: "FULL" in file, file_list))
-        file_name = full_mammograms[idx]
+        img_file_list = os.listdir(self.img_dir)
+        img_file_name = img_file_list[idx]
 
-        img_path = os.path.join(self.img_dir, file_name)
-        image = pydicom.dcmread(img_path).pixel_array.astype(np.int32)
-        label = self._get_masks(file_name)
+        img_path = os.path.join(self.img_dir, img_file_name)
+        image = cv2.imread(img_path)
+
+        mask_file_name = img_file_name.split(".")[0]
+        mask_file_name = mask_file_name.split("_")
+
+        mask_file_name[-1] = "MASK"
+        mask_file_name = "_".join(mask_file_name) + ".png"
+
+        mask_path = os.path.join(self.mask_dir, mask_file_name)
+        label = cv2.imread(mask_path, 0)
 
         if self.transform:
-            image = self.transform(image)
-        if self.target_transform:
-            label = self.target_transform(label)
-
-        image = image.astype(float)
-        rescaled_image = (np.maximum(image, 0) / image.max()) * 255  # float pixels
-        image = np.uint8(rescaled_image)  # integers pixels
-
-        if self.out_dir:
-            file_name_image = file_name.split(".")[0] + ".png"
-            file_name_label = "_".join(file_name.split("_")[:-1]) + "_MASK.png"
-
-            # cv2.imwrite(os.path.join(self.out_dir, file_name_image), image[0].numpy())
-            cv2.imwrite(os.path.join(self.out_dir, file_name_image), image)
-            cv2.imwrite(
-                os.path.join(self.out_dir, file_name_label), label[0].numpy() * 255
-            )
+            image, label = preprocess(image, label, self.width)
 
         return image, label
-
-    def _get_masks(self, img_name: str) -> np.ndarray:
-        """Get masks of full mammogram
-
-        Args:
-                img_name (str): image name of full mammogram
-
-        Returns:
-                np.ndarray: array of masks
-        """
-        masks = []
-        file_name = img_name.split(".")[0]
-        file_name = file_name.split("_")[0:-1]
-        file_name = "_".join(file_name)
-
-        # Find all masks of full mammogram
-        r = re.compile(file_name + "_\d" + "_MASK.dcm")
-        mask_files = list(filter(r.match, os.listdir(self.img_dir)))
-
-        # Load masks
-        for mask in mask_files:
-            mask_path = os.path.join(self.img_dir, mask)
-            mask = pydicom.dcmread(mask_path).pixel_array
-            masks.append(mask)
-
-        return np.array(masks)

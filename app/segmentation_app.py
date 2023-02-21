@@ -1,90 +1,93 @@
 import os
+from tempfile import NamedTemporaryFile
 
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+import omegaconf
+import plotly.express as px
 import streamlit as st
-import torch
-import torchvision.transforms as T
-from icecream import ic
-from loguru import logger
 from PIL import Image
 
-import models.unet_base as unet_base
-import preprocessing.image_transforms as imgt
-import preprocessing.target_transforms as tgt
+cfg = omegaconf.OmegaConf.load("config/config.yaml")
 
-st.header("Segmentación de calcificaciones en mamografías")
-st.write(
-    "Elige la imagen de una mamografía para obtener el correspondiente mapa de segmentación."
+import sys
+
+sys.path.insert(0, cfg.src_path)
+
+from models.fcn import initialize_model, predict
+from preprocessing import transforms
+from utils import apply_mask, segmentation_map
+
+favicon = Image.open(cfg.favicon)
+
+st.set_page_config(
+    page_title="Calc Detector",
+    page_icon=favicon,
+    layout="wide",
+    initial_sidebar_state="auto",
+    menu_items=None,
 )
 
-uploaded_file = st.file_uploader("Sube la imagen")
+with st.sidebar:
+    st.header("Segmenting calcifications on mammograms")
+
+    width = st.number_input(
+        "Image resolution (width)", value=1000, min_value=10, max_value=4000
+    )
+    threshold = st.number_input(
+        "Prediction threshold", value=0.01, min_value=0.0, max_value=1.0, format="%f"
+    )
+
+    uploaded_image = st.file_uploader("Upload the input image")
+    uploaded_model = st.file_uploader("Upload the model file")
+    bt = st.button("Predict")
 
 
-def make_prediction(img, model, postprocess, device):
-    model.eval()
-    img = img.type(torch.FloatTensor)
-    img = img[None, ...]
-    x = img.to(device)  # to torch, send to device
-
-    with torch.no_grad():
-        out = model(x)  # send through model/network
-
-    out_softmax = torch.softmax(out, dim=1)  # perform softmax on outputs
-    result = postprocess(out_softmax)  # postprocess outputs
-
-    return result
-
-
-def predict(image):
-    if torch.cuda.is_available():
-        device = torch.device("cuda")
-    else:
-        device = torch.device("cpu")
-
-    model = unet_base.UNet(
-        in_channels=1,
-        out_channels=2,
-        n_blocks=4,
-        start_filters=32,
-        activation="relu",
-        normalization="batch",
-        conv_mode="same",
-        dim=2,
-    ).to(device)
-
-    model_path = "../src/models/cbis_ddsm_unet_base.pt"
-    torch.load(model_path, map_location=device)
-
-    return make_prediction(image, model, tgt.PostProcess(), device)
-
-
-def apply_mask(img, mask):
-    red = np.array([255, 0, 0], dtype=np.uint8)
-    img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
-
-    masked_img = np.where(mask[..., None], red, img)
-    output = cv2.addWeighted(img, 0.8, masked_img, 0.2, 0)
-
-    return output
-
-
-if uploaded_file is not None:
+if bt and uploaded_image and uploaded_model is not None:
     # Load image and convert to numpy array
-    image = Image.open(uploaded_file)
-    st.image(uploaded_file, caption="Imagen de entrada", use_column_width=True)
-
+    image = Image.open(uploaded_image)
     image_array = np.array(image)
+    image_array = cv2.cvtColor(image_array, cv2.COLOR_GRAY2RGB)
 
     # Preprocess image
-    image_preprocessing_pipeline = T.Compose([imgt.NormalizeMinMax(), T.ToTensor()])
-    img_preprocessed = image_preprocessing_pipeline(image_array)
+    image_preprocessed = transforms.preprocess(image_array, width=width)
 
-    # Make prediction and display segmentation map
-    segmentation_map = predict(img_preprocessed)
-    st.image(segmentation_map, caption="Mapa de segmentación", use_column_width=True)
+    # Load the model and make the prediction
+    with NamedTemporaryFile(dir=".", delete=False) as f:
+        f.write(uploaded_model.getbuffer())
+        model = initialize_model(f.name)
+        f.close()
+        os.unlink(f.name)
+
+    pred = predict(model, image_preprocessed)
+    predi = pred.copy()
+    sm = segmentation_map(pred, threshold=threshold)
 
     # Apply mask to image
-    masked_image = apply_mask(image_array, segmentation_map)
-    st.image(masked_image, caption="Calcificaciones detectadas", use_column_width=True)
+    masked_image = apply_mask(image_preprocessed, sm)
+
+    # Put the images in two columns
+    tab1, tab2 = st.tabs(["📈 Output and probability heatmap", "🎭 Segmentation mask"])
+
+    with tab1:
+        col1, col2 = st.columns(2, gap="large")
+        with col1:
+            fig = plt.imshow(masked_image)
+            pr = fig.make_image(renderer=None, unsampled=True)[0]
+            fig = px.imshow(pr, aspect="equal")
+            fig.update_layout(width=600, height=600)
+            col1.plotly_chart(fig, use_container_width=True)
+
+        with col2:
+            fig = px.imshow(predi, aspect="equal", color_continuous_scale="turbo")
+            fig.update_layout(width=600, height=600)
+            col2.plotly_chart(fig, use_container_width=True)
+
+    with tab2:
+        col1, col2 = st.columns(2)
+        with col1:
+            fig = px.imshow(sm, aspect="equal", color_continuous_scale="gray")
+            fig.update(layout_coloraxis_showscale=False)
+            fig.update_layout(width=600, height=600)
+            col1.plotly_chart(fig, use_column_width=True, clamp=True)

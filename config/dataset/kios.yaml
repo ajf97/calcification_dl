@@ -1,0 +1,16 @@
+name: kios
+path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS"
+
+all_images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\IMAGES"
+all_masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\MASKS"
+
+train_images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\train\\images"
+
+train_masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\train\\masks"
+
+validation_images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\validation\\images"
+
+validation_masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\validation\\masks"
+
+test_images_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\test\\images"
+test_masks_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\datasets\\KIOS\\test\\masks"
