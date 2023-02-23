@@ -6,6 +6,7 @@ import numpy as np
 from patchify import patchify
 from torch.utils.data import Dataset
 
+from preprocessing.extract_features import extract_image_features
 from preprocessing.transforms import preprocess
 
 
@@ -60,7 +61,8 @@ class CBISDataset(Dataset):
                 label, patch_size=self.patch_size, step=self.patch_size[0]
             )
 
-            image = patches_image
+            image_features = extract_image_features(patches_image, self.window_size)
+            image = image_features
             label = patches_mask.reshape(
                 (
                     patches_mask.shape[0] * patches_mask.shape[1],
