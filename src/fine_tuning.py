@@ -154,50 +154,55 @@ def run_experiment(cfg: DictConfig) -> None:
         num_workers=0,
     )
 
-    # First, we only train encoder with features images
+    # First, we only train the encoder with features images
     network.pred.weight.requires_grad = False
     network.pred.bias.requires_grad = False
+    print("Pretrained weight on pred layer: ", network.pred.weight)
 
     with Live(save_dvc_exp=True) as live:
         live.log_params(cfg.train)
         best_metric = 0.0
 
         print("Start training")
-        for epoch in range(epochs):  # loop over the dataset multiple times
+        for epoch in range(3):  # loop over the dataset multiple times
             running_loss = 0.0
             for i, data in enumerate(trainloader, 0):
                 # get the inputs; data is a list of [inputs, labels]
                 inputs, labels = data
 
-                # Train the model
-                loss = train_model(
-                    cfg=cfg,
-                    network=network,
-                    device=device,
-                    inputs=inputs,
-                    labels=labels,
-                    criterion=criterion,
-                    optimizer=optimizer,
-                )
+                for input, label in zip(inputs[0], labels[0]):
+                    # Train the model
+                    input = torch.reshape(input, (1, 50, 50))
+                    label = torch.reshape(label, (1, 50, 50))
 
-                # Evaluation of the model
-                eval_dict = {"val": validation_dataset}
-                iou_val = 0.0
+                    loss = train_model(
+                        cfg=cfg,
+                        network=network,
+                        device=device,
+                        inputs=input,
+                        labels=label,
+                        criterion=criterion,
+                        optimizer=optimizer,
+                    )
 
-                for eval, value in eval_dict.items():
-                    metrics = evaluate_model(network, value, cfg.train.threshold)
+                    # Evaluation of the model
+                    # eval_dict = {"val": validation_dataset}
+                    # iou_val = 0.0
 
-                    for metric_name, value in metrics.items():
-                        live.log_metric(metric_name + "_" + eval, value)
+                    # for eval, value in eval_dict.items():
+                    #     metrics = evaluate_model(network, value, cfg.train.threshold)
 
-                        if eval == "val":
-                            iou_val = metrics["iou"]
+                    #     for metric_name, value in metrics.items():
+                    #         live.log_metric(metric_name + "_" + eval, value)
 
-                live.next_step()
+                    #         if eval == "val":
+                    #             iou_val = metrics["iou"]
+
+                    # live.next_step()
 
                 # Save the best model
-                if iou_val > best_metric:
-                    torch.save(network.state_dict(), cfg.train.model_output)
+                # if iou_val > best_metric:
+                #     torch.save(network.state_dict(), cfg.train.model_output)
 
                 # print statistics
                 running_loss += loss.item()
@@ -206,7 +211,7 @@ def run_experiment(cfg: DictConfig) -> None:
                     running_loss = 0.0
 
         print("Finished Training")
-
+        print("Weights of pred layer: ", network.pred.weight)
         metrics = evaluate_model(network, test_dataset, cfg.train.threshold)
         for metric_name, value in metrics.items():
             live.log_metric(metric_name + "_test", value)
