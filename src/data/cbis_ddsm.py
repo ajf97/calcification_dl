@@ -3,17 +3,30 @@ import re
 
 import cv2
 import numpy as np
+from patchify import patchify
 from torch.utils.data import Dataset
 
 from preprocessing.transforms import preprocess
 
 
 class CBISDataset(Dataset):
-    def __init__(self, img_dir: str, mask_dir: str, transform=False, width=300):
+    def __init__(
+        self,
+        img_dir: str,
+        mask_dir: str,
+        transform=False,
+        width=300,
+        extract_features=False,
+        patch_size=None,
+        window_size=None,
+    ):
         self.img_dir = img_dir
         self.mask_dir = mask_dir
         self.transform = transform
         self.width = width
+        self.extract_features = extract_features
+        self.patch_size = patch_size
+        self.window_size = window_size
 
     def __len__(self):
         files_list = os.listdir(self.img_dir)
@@ -38,4 +51,21 @@ class CBISDataset(Dataset):
         if self.transform:
             image, label = preprocess(image, label, self.width)
 
+        if self.extract_features and self.patch_size and self.window_size:
+            patches_image = patchify(
+                image, patch_size=self.patch_size, step=self.patch_size[0]
+            )
+
+            patches_mask = patchify(
+                label, patch_size=self.patch_size, step=self.patch_size[0]
+            )
+
+            image = patches_image
+            label = patches_mask.reshape(
+                (
+                    patches_mask.shape[0] * patches_mask.shape[1],
+                    patches_mask.shape[2],
+                    patches_mask.shape[3],
+                )
+            )
         return image, label
