@@ -21,6 +21,13 @@ from models.fcn import initialize_model, predict
 from utils import segmentation_map
 
 
+def dfs_freeze(model, freeze=False):
+    for _, child in model.named_children():
+        for param in child.parameters():
+            param.requires_grad = freeze
+        dfs_freeze(child)
+
+
 def evaluate_model(network, test_dataset, threshold=0.5):
     """Evaluate model on test dataset
 
@@ -210,13 +217,97 @@ def run_experiment(cfg: DictConfig) -> None:
                     print(f"[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 10:.3f}")
                     running_loss = 0.0
 
-        print("Finished Training")
+        print("finished first training")
+
+    # now, we freeze the encoder and unfreezer the last layer
+
+    dfs_freeze(network)
+    network.pred.weight.requires_grad = True
+    network.pred.weight.bias = True
+
+    train_dataset = CBISDataset(
+        cfg.dataset.train_images_path,
+        cfg.dataset.train_masks_path,
+        transform=True,
+        width=cfg.train.width,
+    )
+
+    trainloader = torch.utils.data.DataLoader(
+        train_dataset,
+        shuffle=True,
+        num_workers=0,
+    )
+
+    print("Weight on the last layer: ", network.pred.weight)
+    print("Starting the second training")
+    for epoch in range(3):  # loop over the dataset multiple times
+        running_loss = 0.0
+        for i, data in enumerate(trainloader, 0):
+            # get the inputs; data is a list of [inputs, labels]
+            inputs, labels = data
+
+            # Train the model
+            loss = train_model(
+                cfg=cfg,
+                network=network,
+                device=device,
+                inputs=inputs,
+                labels=labels,
+                criterion=criterion,
+                optimizer=optimizer,
+            )
+
+            # print statistics
+            running_loss += loss.item()
+            if i % 10 == 9:  # print every 10 mini-batches
+                print(f"[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 10:.3f}")
+                running_loss = 0.0
+
+        print("Finished the second training")
         print("Weights of pred layer: ", network.pred.weight)
+
+        # Unfreeze all the network and train with a lower lr
+        dfs_freeze(network, True)
+
+        trainloader = torch.utils.data.DataLoader(
+            train_dataset,
+            shuffle=True,
+            num_workers=0,
+        )
+        optimizer = optim.SGD(
+            network.parameters(), lr=0.0001, momentum=cfg.train.momentum
+        )
+        print("Starting the third and last training")
+
+    with Live(save_dvc_exp=True) as live:
+        for epoch in range(10):  # loop over the dataset multiple times
+            running_loss = 0.0
+            for i, data in enumerate(trainloader, 0):
+                # get the inputs; data is a list of [inputs, labels]
+                inputs, labels = data
+
+                # Train the model
+                loss = train_model(
+                    cfg=cfg,
+                    network=network,
+                    device=device,
+                    inputs=inputs,
+                    labels=labels,
+                    criterion=criterion,
+                    optimizer=optimizer,
+                )
+
+                # print statistics
+                running_loss += loss.item()
+                if i % 10 == 9:  # print every 10 mini-batches
+                    print(f"[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 10:.3f}")
+                    running_loss = 0.0
         metrics = evaluate_model(network, test_dataset, cfg.train.threshold)
         for metric_name, value in metrics.items():
             live.log_metric(metric_name + "_test", value)
 
         print("Evaluated on test set")
+        print(metrics)
 
 
 # torch.save(network.state_dict(), "../src/models/1.weights")

@@ -1,7 +1,4 @@
 {
-    "iou_val": 0.549496978521347,
-    "dice_score_val": 0.7049643099308014,
-    "step": 299,
-    "iou_test": 0.3953536060705249,
-    "dice_score_test": 0.516688137847398
+    "iou_test": 0.0,
+    "dice_score_test": 0.0
 }
