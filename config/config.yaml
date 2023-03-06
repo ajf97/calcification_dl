@@ -1,6 +1,6 @@
 defaults:
   - dataset/kios
-  - train/train
+  - train/train_cbis
   - _self_
 
 src_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src"
