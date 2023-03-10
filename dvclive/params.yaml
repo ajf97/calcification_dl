@@ -4,6 +4,6 @@ momentum: 0.9
 batch_size: 1
 seed: 33
 width: 650
-threshold: 0.05
+threshold: 0.15
 current_dataset: cbis
 model_output: C:\Users\ajf97\root\software\repositories\calcification_dl\src\models\cbis.weights
