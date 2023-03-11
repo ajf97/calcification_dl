@@ -4,9 +4,9 @@ momentum: 0.9
 batch_size: 1
 
 seed: 33
-width: 700
+width: 780
 
-threshold: 0.07
+threshold: 0.1
 
 current_dataset: "kios"
 model_output: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src\\models\\kios.weights"
