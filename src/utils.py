@@ -46,6 +46,6 @@ def apply_mask(img, mask):
     img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
 
     masked_img = np.where(mask[..., None], red, img)
-    output = cv2.addWeighted(img, 0.8, masked_img, 0.6, 0)
+    output = cv2.addWeighted(img, 0.5, masked_img, 0.5, 0)
 
     return output
