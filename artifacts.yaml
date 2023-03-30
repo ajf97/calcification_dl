@@ -1,0 +1,6 @@
+calc-cbis:
+  description: Best model
+  labels:
+  - v1
+  path: src/models/cbis.weights
+  type: model
