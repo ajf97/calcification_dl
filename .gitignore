@@ -6,4 +6,6 @@ notebooks
 logs
 temp
 *.png
+!favicon.png
+!2023*.png
 first_experiments
