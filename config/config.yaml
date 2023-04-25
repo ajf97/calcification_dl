@@ -6,7 +6,7 @@ defaults:
   - _self_
 
 src_path: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src"
-favicon: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\app\\assets\\favicon.png"
+favicon: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\app\\images\\favicon.png"
 
 model_dir: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src\\models"
 pretrained_weights: "C:\\Users\\ajf97\\root\\software\\repositories\\calcification_dl\\src\\models\\pretrained.weights"
