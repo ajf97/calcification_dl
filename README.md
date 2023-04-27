@@ -59,6 +59,8 @@ To run the web app you have two options:
 1. Run locally by typing `streamlit run ./app/segmentation_app.py`. The app will be running in http://localhost:8501.
 2. Run this [notebook](https://colab.research.google.com/drive/1L8ut6zsCf6n0AgwfREmyuzMWkGPMH8VN?usp=share_link) in Google Colab.
 
+In this [Drive](https://drive.google.com/drive/folders/1z5O4mGQEsPN8-AGm_mL00aGciJJjp2_3?usp=share_link) folder you can download example images, datasets and models weights.
+
 To run tests: `pytest tests`
 
 ## Authors
